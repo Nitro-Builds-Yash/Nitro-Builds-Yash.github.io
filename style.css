@@ -379,6 +379,34 @@ body {
   transform: translateY(-2px);
 }
 
+.btn-share-link {
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--accent-emerald);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  font-family: var(--font-mono);
+}
+
+.btn-share-link:hover {
+  background: #10b981;
+  color: #04101e;
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+  transform: translateY(-2px);
+}
+
+.share-pill {
+  cursor: pointer;
+  background: rgba(16, 185, 129, 0.1) !important;
+  border-color: rgba(16, 185, 129, 0.35) !important;
+  color: var(--accent-emerald) !important;
+}
+
+.share-pill:hover {
+  background: rgba(16, 185, 129, 0.25) !important;
+  border-color: #10b981 !important;
+  color: #fff !important;
+  transform: translateY(-2px);
+}
+
 /* Theme Dropdown */
 .theme-dropdown {
   position: relative;
