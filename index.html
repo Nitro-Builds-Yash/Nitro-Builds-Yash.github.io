@@ -4,12 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Athota Yashwanth | AI Developer & Systems Architect</title>
-  <meta name="description" content="Portfolio of Athota Yashwanth - AI Developer, RAG Systems Specialist, Backend Architect, and Full-Stack Engineer." />
+  <meta name="description" content="Portfolio of Athota Yashwanth - AI Developer at OMICS International, RAG Systems Specialist, Backend Architect, and Full-Stack Engineer." />
   
   <!-- Favicon / Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800;900&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&family=Press+Start+2P&display=swap" rel="stylesheet">
   
   <!-- Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
@@ -25,22 +25,22 @@
   <!-- Background Particle Stars / Cyber Grid Canvas -->
   <canvas id="bgCanvas"></canvas>
 
-  <!-- Sound Toggle & HUD Bar -->
+  <!-- Sound Toggle & Floating Glass Island Header -->
   <header class="hud-header">
     <div class="hud-left">
       <a href="#hero" class="brand-glitch" data-text="NITRO.SYS">
         <span class="pixel-prefix">&gt;</span> ATHOTA_YASHWANTH
       </a>
       <span class="hud-status-badge">
-        <span class="status-dot pulse"></span> OPEN TO WORK / COLLABS
+        <span class="status-dot pulse"></span> OPEN TO WORK
       </span>
     </div>
 
     <nav class="hud-nav" id="hudNav">
       <a href="#about" class="hud-link"><i class="fa-solid fa-user-astronaut"></i> <span>About</span></a>
-      <a href="#skills" class="hud-link"><i class="fa-solid fa-microchip"></i> <span>Skills & Stats</span></a>
-      <a href="#experience" class="hud-link"><i class="fa-solid fa-briefcase"></i> <span>Quests & Exp</span></a>
-      <a href="#projects" class="hud-link"><i class="fa-solid fa-folder-tree"></i> <span>Projects</span></a>
+      <a href="#skills" class="hud-link"><i class="fa-solid fa-microchip"></i> <span>Arsenal</span></a>
+      <a href="#experience" class="hud-link"><i class="fa-solid fa-briefcase"></i> <span>Experience</span></a>
+      <a href="#projects" class="hud-link active"><i class="fa-solid fa-terminal"></i> <span>Mission Deck</span></a>
       <a href="#arcade" class="hud-link"><i class="fa-solid fa-gamepad"></i> <span>Arcade</span></a>
       <a href="#certifications" class="hud-link"><i class="fa-solid fa-award"></i> <span>Badges</span></a>
       <a href="#contact" class="hud-link"><i class="fa-solid fa-paper-plane"></i> <span>Contact</span></a>
@@ -65,71 +65,111 @@
   <!-- Mobile Drawer -->
   <div class="mobile-drawer" id="mobileDrawer">
     <a href="#about" class="m-link">About</a>
-    <a href="#skills" class="m-link">Skills & Stats</a>
+    <a href="#skills" class="m-link">Skills &amp; Stats</a>
     <a href="#experience" class="m-link">Experience</a>
-    <a href="#projects" class="m-link">Projects</a>
+    <a href="#projects" class="m-link">Mission Deck (Projects)</a>
     <a href="#arcade" class="m-link">Arcade Zone</a>
-    <a href="#certifications" class="m-link">Badges & Education</a>
+    <a href="#certifications" class="m-link">Badges &amp; Education</a>
     <a href="#contact" class="m-link">Contact Mission</a>
   </div>
 
   <main>
-    <!-- HERO SECTION (Retro-Modern Sci-Fi Game HUD) -->
+    <!-- HERO SECTION (Command Center HUD with Live Radar & Holographic Tiles) -->
     <section class="hero-section" id="hero">
       <div class="hero-container">
-        <!-- Floating HUD Player Card -->
-        <div class="hero-player-tag">
-          <span class="tag-label">PLAYER 1 READY</span>
-          <span class="tag-level">LVL. 24 &bull; AI ARCHITECT</span>
-          <span class="tag-hp">HP: <strong class="hp-val">100/100</strong></span>
-          <span class="tag-mana">MP: <strong class="mp-val">9999</strong></span>
-        </div>
+        
+        <div class="hero-dashboard-layout">
+          <!-- Left Column: Intro & Mission Stats -->
+          <div class="hero-left-col">
+            <div class="hero-player-tag">
+              <span class="tag-label">PLAYER 1 READY</span>
+              <span class="tag-level">LVL. 24 &bull; AI ARCHITECT</span>
+              <span class="tag-hp">HP: <strong class="hp-val">100/100</strong></span>
+              <span class="tag-mana">MP: <strong class="mp-val">9999</strong></span>
+            </div>
 
-        <h1 class="hero-title">
-          Engineering <span class="gradient-text glitch-effect" data-text="Deterministic AI">Deterministic AI</span> & High-Throughput <span class="accent-text">Microservices</span>
-        </h1>
+            <h1 class="hero-title">
+              Engineering <span class="gradient-text glitch-effect">Deterministic AI</span> &amp; Scalable <span class="accent-text">Microservices</span>
+            </h1>
 
-        <p class="hero-subtitle">
-          Hi! I am <strong class="name-bold">Athota Yashwanth</strong> (<span class="code-pill">Nitro-Builds-Yash</span>) &mdash; AI Developer at <strong>OMICS International</strong> & systems engineer specializing in <strong>Agentic RAG</strong>, multi-modal document parsing, high-concurrency <strong>FastAPI</strong> pipelines, and vector retrieval.
-        </p>
+            <p class="hero-subtitle">
+              Hi! I am <strong class="name-bold">Athota Yashwanth</strong> (<span class="code-pill">Nitro-Builds-Yash</span>) &mdash; AI Developer at <strong>OMICS International</strong> specializing in <strong>Agentic RAG</strong>, multi-modal document extraction, high-throughput <strong>FastAPI</strong> pipelines, and vector indexing.
+            </p>
 
-        <!-- Dynamic Typing Terminal Line -->
-        <div class="terminal-banner">
-          <span class="term-prompt">yashwanth@omnichunk:~$</span>
-          <span class="term-typewriter" id="termTypewriter"></span>
-          <span class="term-cursor">_</span>
-        </div>
+            <!-- Dynamic Typing Terminal Line -->
+            <div class="terminal-banner">
+              <span class="term-prompt">yashwanth@omnichunk:~$</span>
+              <span class="term-typewriter" id="termTypewriter"></span>
+              <span class="term-cursor">_</span>
+            </div>
 
-        <!-- Action Buttons -->
-        <div class="hero-cta-group">
-          <a href="#projects" class="game-btn primary-btn sound-click">
-            <i class="fa-solid fa-rocket"></i> EXPLORE BUILDS
-          </a>
-          <a href="#arcade" class="game-btn arcade-btn sound-click">
-            <i class="fa-solid fa-gamepad"></i> PLAY NEURAL DODGE
-          </a>
-          <a href="https://github.com/Nitro-Builds-Yash" target="_blank" rel="noopener noreferrer" class="game-btn secondary-btn sound-click">
-            <i class="fa-brands fa-github"></i> GITHUB PROFILE
-          </a>
+            <!-- Action Buttons -->
+            <div class="hero-cta-group">
+              <a href="#projects" class="game-btn primary-btn sound-click">
+                <i class="fa-solid fa-terminal"></i> LAUNCH MISSION DECK
+              </a>
+              <a href="#arcade" class="game-btn arcade-btn sound-click">
+                <i class="fa-solid fa-gamepad"></i> PLAY NEURAL DODGE
+              </a>
+              <a href="https://github.com/Nitro-Builds-Yash" target="_blank" rel="noopener noreferrer" class="game-btn secondary-btn sound-click">
+                <i class="fa-brands fa-github"></i> GITHUB PROFILE
+              </a>
+            </div>
+          </div>
+
+          <!-- Right Column: Holographic Radar HUD Card -->
+          <div class="hero-radar-card">
+            <div class="radar-header">
+              <div class="radar-title">
+                <i class="fa-solid fa-satellite-dish"></i> ACTIVE TELEMETRY
+              </div>
+              <div class="radar-status">
+                <i class="fa-solid fa-circle-dot"></i> LIVE LINKED
+              </div>
+            </div>
+
+            <div class="radar-metrics">
+              <div class="radar-metric-item">
+                <span class="radar-metric-label"><i class="fa-solid fa-microchip"></i> Current Station</span>
+                <span class="radar-metric-val">OMICS International</span>
+              </div>
+              <div class="radar-metric-item">
+                <span class="radar-metric-label"><i class="fa-solid fa-diagram-project"></i> Primary Focus</span>
+                <span class="radar-metric-val">Agentic RAG &amp; Multi-Modal</span>
+              </div>
+              <div class="radar-metric-item">
+                <span class="radar-metric-label"><i class="fa-solid fa-bolt"></i> API Response Boost</span>
+                <span class="radar-metric-val" style="color: var(--accent-green);">+35% Faster</span>
+              </div>
+              <div class="radar-metric-item">
+                <span class="radar-metric-label"><i class="fa-solid fa-server"></i> Production Reliability</span>
+                <span class="radar-metric-val" style="color: var(--accent-gold);">99.8% Uptime</span>
+              </div>
+              <div class="radar-metric-item">
+                <span class="radar-metric-label"><i class="fa-solid fa-graduation-cap"></i> Academic Base</span>
+                <span class="radar-metric-val">MLRITM (GPA: 8.20/10)</span>
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- Quick Stats Banner -->
         <div class="hero-stats-grid">
           <div class="stat-card">
-            <div class="stat-num" data-target="15000">15,000+</div>
-            <div class="stat-label">Research Papers Parsed</div>
+            <div class="stat-num">15,000+</div>
+            <div class="stat-label">Research Papers Extracted</div>
           </div>
           <div class="stat-card">
-            <div class="stat-num" data-target="98">98%</div>
-            <div class="stat-label">Structural Precision (OmniChunk)</div>
+            <div class="stat-num">98%</div>
+            <div class="stat-label">Structural Text Retention</div>
           </div>
           <div class="stat-card">
-            <div class="stat-num" data-target="100">100K+</div>
+            <div class="stat-num">100K+</div>
             <div class="stat-label">Structured Author Records</div>
           </div>
           <div class="stat-card">
-            <div class="stat-num" data-target="99.8">99.8%</div>
-            <div class="stat-label">Production Service Uptime</div>
+            <div class="stat-num">99.8%</div>
+            <div class="stat-label">Service Uptime Maintained</div>
           </div>
         </div>
       </div>
@@ -152,13 +192,12 @@
         <div class="about-card profile-bio-card">
           <div class="pixel-avatar-box">
             <img src="https://avatars.githubusercontent.com/u/321057362?v=4" alt="Athota Yashwanth" class="avatar-img" />
-            <div class="avatar-ring"></div>
             <div class="online-indicator"></div>
           </div>
 
           <div class="bio-text">
             <h3>Athota Yashwanth</h3>
-            <p class="role-caption">AI Developer &bull; Backend Systems &bull; B.Tech CSE (AI & ML)</p>
+            <p class="role-caption">AI Developer &bull; Backend Systems &bull; B.Tech CSE (AI &amp; ML)</p>
             <p class="bio-desc">
               Based in <strong>Hyderabad, India</strong>. I bridge chaotic real-world unstructured data and deterministic, rock-solid intelligence. From building <strong>multimodal document extraction engines</strong> that extract tabular citations from 100+ page PDFs to crafting voice-guided code intelligence agents and high-throughput microservices.
             </p>
@@ -186,7 +225,7 @@
           <div class="attributes-list">
             <div class="attribute-row">
               <div class="attr-meta">
-                <span><i class="fa-solid fa-brain"></i> Agentic RAG & LLM Integration</span>
+                <span><i class="fa-solid fa-brain"></i> Agentic RAG &amp; LLM Integration</span>
                 <span class="attr-level">Master (95%)</span>
               </div>
               <div class="attr-bar-bg"><div class="attr-bar-fill" style="width: 95%;"></div></div>
@@ -207,7 +246,7 @@
             </div>
             <div class="attribute-row">
               <div class="attr-meta">
-                <span><i class="fa-brands fa-docker"></i> Containerization & DevOps (CI/CD, AWS)</span>
+                <span><i class="fa-brands fa-docker"></i> Containerization &amp; DevOps (CI/CD, AWS)</span>
                 <span class="attr-level">Advanced (88%)</span>
               </div>
               <div class="attr-bar-bg"><div class="attr-bar-fill" style="width: 88%;"></div></div>
@@ -232,6 +271,85 @@
               <i class="fa-solid fa-fire"></i> Radical Streak
             </a>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RADICALLY REDESIGNED PROJECT STAGE: INTERACTIVE MISSION DECK -->
+    <section class="section-container" id="projects">
+      <div class="section-header">
+        <span class="sub-badge"><i class="fa-solid fa-terminal"></i> INTERACTIVE MISSION DECK</span>
+        <h2 class="section-title">Featured Projects &amp; Builds</h2>
+        <div class="header-line"></div>
+      </div>
+
+      <div class="projects-deck-container">
+        <!-- Left Deck: Mission Selector -->
+        <div class="project-selector-list" id="projectSelectorList">
+          <!-- Item 1: OmniChunk -->
+          <div class="project-select-item active" data-project="omnichunk">
+            <div class="psi-icon"><i class="fa-solid fa-cubes-stacked"></i></div>
+            <div class="psi-info">
+              <div class="psi-name">OmniChunk</div>
+              <div class="psi-category">MULTI-MODAL CHUNKING</div>
+            </div>
+            <div class="psi-status"><i class="fa-solid fa-angle-right"></i></div>
+          </div>
+
+          <!-- Item 2: Pulsus-MedScout -->
+          <div class="project-select-item" data-project="pulsus">
+            <div class="psi-icon"><i class="fa-solid fa-dna"></i></div>
+            <div class="psi-info">
+              <div class="psi-name">Pulsus-MedScout</div>
+              <div class="psi-category">BIOMEDICAL CRAWLER</div>
+            </div>
+            <div class="psi-status"><i class="fa-solid fa-angle-right"></i></div>
+          </div>
+
+          <!-- Item 3: Halo -->
+          <div class="project-select-item" data-project="halo">
+            <div class="psi-icon"><i class="fa-solid fa-book-open-reader"></i></div>
+            <div class="psi-info">
+              <div class="psi-name">Halo QA</div>
+              <div class="psi-category">HYBRID RAG RETRIEVAL</div>
+            </div>
+            <div class="psi-status"><i class="fa-solid fa-angle-right"></i></div>
+          </div>
+
+          <!-- Item 4: VoxCode -->
+          <div class="project-select-item" data-project="voxcode">
+            <div class="psi-icon"><i class="fa-solid fa-microphone-lines"></i></div>
+            <div class="psi-info">
+              <div class="psi-name">VoxCode</div>
+              <div class="psi-category">VOICE AST CODE AGENT</div>
+            </div>
+            <div class="psi-status"><i class="fa-solid fa-angle-right"></i></div>
+          </div>
+
+          <!-- Item 5: Crypto -->
+          <div class="project-select-item" data-project="crypto">
+            <div class="psi-icon"><i class="fa-solid fa-coins"></i></div>
+            <div class="psi-info">
+              <div class="psi-name">Crypto-Simulation</div>
+              <div class="psi-category">MONGOOSE BACKEND API</div>
+            </div>
+            <div class="psi-status"><i class="fa-solid fa-angle-right"></i></div>
+          </div>
+
+          <!-- Item 6: Agamemnon -->
+          <div class="project-select-item" data-project="agamemnon">
+            <div class="psi-icon"><i class="fa-solid fa-shield-halved"></i></div>
+            <div class="psi-info">
+              <div class="psi-name">Agamemnon</div>
+              <div class="psi-category">SELF-HOSTED AI RUNNER</div>
+            </div>
+            <div class="psi-status"><i class="fa-solid fa-angle-right"></i></div>
+          </div>
+        </div>
+
+        <!-- Right Stage: Live Interactive Telemetry Deep Dive -->
+        <div class="project-showcase-stage" id="projectShowcaseStage">
+          <!-- Injected dynamically by JavaScript -->
         </div>
       </div>
     </section>
@@ -287,7 +405,7 @@
           <div class="skill-icon"><i class="fa-solid fa-layer-group"></i></div>
           <div class="skill-info">
             <h4>Multi-Modal Extraction</h4>
-            <span>Zero-loss structural & tabular chunking</span>
+            <span>Zero-loss structural &amp; tabular chunking</span>
           </div>
         </div>
 
@@ -498,191 +616,6 @@
             </div>
           </div>
         </div>
-      </div>
-    </section>
-
-    <!-- PROJECTS SHOWCASE SECTION -->
-    <section class="section-container" id="projects">
-      <div class="section-header">
-        <span class="sub-badge"><i class="fa-solid fa-trophy"></i> FEATURED BUILDS</span>
-        <h2 class="section-title">Projects &amp; Open Source</h2>
-        <div class="header-line"></div>
-      </div>
-
-      <div class="projects-grid">
-        <!-- PROJECT 1: OmniChunk -->
-        <article class="project-card">
-          <div class="project-card-header">
-            <div class="card-icon"><i class="fa-solid fa-cubes-stacked"></i></div>
-            <div class="card-category">AI / MULTI-MODAL RAG</div>
-            <span class="project-date">Oct 2026</span>
-          </div>
-          <h3 class="project-title">OmniChunk</h3>
-          <p class="project-tagline">Universal AI Multi-Modal Chunking &amp; Relational Structure Extraction Platform</p>
-          <p class="project-body">
-            Architected a parsing engine processing 100+ page complex PDFs with multi-column tables, achieving <strong>98% structural text retention</strong>. Preserved contextual relationships across 25+ tabular sections per document, boosting downstream semantic search precision by <strong>40%</strong>. Includes a live dashboard for chunk inspection.
-          </p>
-          <div class="project-highlights">
-            <span><i class="fa-solid fa-check"></i> 100+ Page Complex PDFs</span>
-            <span><i class="fa-solid fa-check"></i> 98% Text Retention</span>
-            <span><i class="fa-solid fa-check"></i> +40% Search Precision</span>
-          </div>
-          <div class="project-tech-stack">
-            <span class="tech-pill">Python</span>
-            <span class="tech-pill">FastAPI</span>
-            <span class="tech-pill">Gemini Vision API</span>
-            <span class="tech-pill">Docker</span>
-            <span class="tech-pill">WebSockets</span>
-          </div>
-          <div class="project-links">
-            <a href="https://github.com/Nitro-Builds-Yash/OmniChunk" target="_blank" rel="noopener noreferrer" class="link-btn sound-click">
-              <i class="fa-brands fa-github"></i> Repository
-            </a>
-          </div>
-        </article>
-
-        <!-- PROJECT 2: Pulsus-MedScout -->
-        <article class="project-card">
-          <div class="project-card-header">
-            <div class="card-icon"><i class="fa-solid fa-dna"></i></div>
-            <div class="card-category">DATA PLATFORM / CRAWLER</div>
-            <span class="project-date">Oct 2026</span>
-          </div>
-          <h3 class="project-title">Pulsus-MedScout</h3>
-          <p class="project-tagline">Biomedical Literature &amp; Author Intelligence Platform (34 Repositories)</p>
-          <p class="project-body">
-            Engineered a high-concurrency discovery crawler across <strong>34 journal repositories</strong>, aggregating metadata for <strong>20,000+ academic publications</strong>. Extracted verified researcher contact records with 95% accuracy and automated scheduled exports into formatted Excel reports with exponential backoff retries (3x throughput boost).
-          </p>
-          <div class="project-highlights">
-            <span><i class="fa-solid fa-check"></i> 34 Journal Repos</span>
-            <span><i class="fa-solid fa-check"></i> 20,000+ Publications</span>
-            <span><i class="fa-solid fa-check"></i> 3x Crawl Throughput</span>
-          </div>
-          <div class="project-tech-stack">
-            <span class="tech-pill">Python</span>
-            <span class="tech-pill">BeautifulSoup</span>
-            <span class="tech-pill">Data Pipelines</span>
-            <span class="tech-pill">Excel Automation</span>
-            <span class="tech-pill">Async Workers</span>
-          </div>
-          <div class="project-links">
-            <a href="https://github.com/Nitro-Builds-Yash/Pulsus-MedScout" target="_blank" rel="noopener noreferrer" class="link-btn sound-click">
-              <i class="fa-brands fa-github"></i> Repository
-            </a>
-          </div>
-        </article>
-
-        <!-- PROJECT 3: Halo -->
-        <article class="project-card">
-          <div class="project-card-header">
-            <div class="card-icon"><i class="fa-solid fa-book-open-reader"></i></div>
-            <div class="card-category">HYBRID RAG / QA SYSTEM</div>
-            <span class="project-date">Aug 2026</span>
-          </div>
-          <h3 class="project-title">Halo</h3>
-          <p class="project-tagline">Question-Answering Document Search &amp; Multi-Doc Reasoning</p>
-          <p class="project-body">
-            Constructed a document QA platform processing 50+ concurrent PDF queries with citation confidence scores above <strong>92%</strong>. Combined BM25 keyword matching with dense vector embeddings (FAISS), improving retrieval recall by <strong>28%</strong> over pure semantic search. Setup automated unit tests and Docker image publishing via GitHub Actions.
-          </p>
-          <div class="project-highlights">
-            <span><i class="fa-solid fa-check"></i> 92%+ Citation Confidence</span>
-            <span><i class="fa-solid fa-check"></i> +28% Retrieval Recall</span>
-            <span><i class="fa-solid fa-check"></i> 15m &rarr; 3m CI/CD Cycle</span>
-          </div>
-          <div class="project-tech-stack">
-            <span class="tech-pill">Python</span>
-            <span class="tech-pill">FAISS</span>
-            <span class="tech-pill">BM25 Hybrid</span>
-            <span class="tech-pill">Docker</span>
-            <span class="tech-pill">GitHub Actions</span>
-          </div>
-          <div class="project-links">
-            <a href="https://github.com/Nitro-Builds-Yash/halo" target="_blank" rel="noopener noreferrer" class="link-btn sound-click">
-              <i class="fa-brands fa-github"></i> Repository
-            </a>
-          </div>
-        </article>
-
-        <!-- PROJECT 4: VoxCode -->
-        <article class="project-card">
-          <div class="project-card-header">
-            <div class="card-icon"><i class="fa-solid fa-microphone-lines"></i></div>
-            <div class="card-category">DEVELOPER AGENT &bull; AST</div>
-            <span class="project-date">Aug 2026</span>
-          </div>
-          <h3 class="project-title">VoxCode</h3>
-          <p class="project-tagline">Voice-Assisted AI Coding Agent &amp; AST Code Navigator</p>
-          <p class="project-body">
-            Created an AST-based static code analyzer parsing repositories with <strong>50,000+ lines of Python code in under 1.8 seconds</strong>. Indexed symbols, method signatures, and class references to generate accurate multi-file diff patches with zero syntax breakages. Integrated conversational voice assistance and multi-repo test runner.
-          </p>
-          <div class="project-highlights">
-            <span><i class="fa-solid fa-check"></i> 50k+ LOC in &lt;1.8s</span>
-            <span><i class="fa-solid fa-check"></i> Zero-Breakage Diff Patches</span>
-            <span><i class="fa-solid fa-check"></i> Voice STT / TTS Integration</span>
-          </div>
-          <div class="project-tech-stack">
-            <span class="tech-pill">Python</span>
-            <span class="tech-pill">AST Analysis</span>
-            <span class="tech-pill">Shell Scripting</span>
-            <span class="tech-pill">Git</span>
-            <span class="tech-pill">STT / TTS</span>
-          </div>
-          <div class="project-links">
-            <a href="https://github.com/Nitro-Builds-Yash/voxcode" target="_blank" rel="noopener noreferrer" class="link-btn sound-click">
-              <i class="fa-brands fa-github"></i> Repository
-            </a>
-          </div>
-        </article>
-
-        <!-- PROJECT 5: Crypto Currency Simulation -->
-        <article class="project-card">
-          <div class="project-card-header">
-            <div class="card-icon"><i class="fa-solid fa-coins"></i></div>
-            <div class="card-category">BACKEND API / MONGOOSE</div>
-            <span class="project-date">GitHub Featured</span>
-          </div>
-          <h3 class="project-title">Crypto-Currency-Simulation</h3>
-          <p class="project-tagline">Backend Model for Educational Cryptocurrency Applications</p>
-          <p class="project-body">
-            Streamlined and secure backend model for user management and cryptocurrency transaction tracking, demonstrating best practices in Mongoose schema design, strict relational integrity, and transaction validation.
-          </p>
-          <div class="project-tech-stack">
-            <span class="tech-pill">Node.js</span>
-            <span class="tech-pill">MongoDB</span>
-            <span class="tech-pill">Mongoose</span>
-            <span class="tech-pill">REST API</span>
-          </div>
-          <div class="project-links">
-            <a href="https://github.com/Nitro-Builds-Yash/Crypto-Currency-Simulation-main" target="_blank" rel="noopener noreferrer" class="link-btn sound-click">
-              <i class="fa-brands fa-github"></i> Repository
-            </a>
-          </div>
-        </article>
-
-        <!-- PROJECT 6: Agamemnon -->
-        <article class="project-card">
-          <div class="project-card-header">
-            <div class="card-icon"><i class="fa-solid fa-shield-halved"></i></div>
-            <div class="card-category">SELF-HOSTED AI</div>
-            <span class="project-date">Active Lab</span>
-          </div>
-          <h3 class="project-title">Agamemnon</h3>
-          <p class="project-tagline">Self-Hosted AI Workspace &amp; Local Orchestrator</p>
-          <p class="project-body">
-            Autonomous, self-hosted AI workspace environment tailored for private data ingestion, offline RAG retrieval, and secure developer agent execution.
-          </p>
-          <div class="project-tech-stack">
-            <span class="tech-pill">Python</span>
-            <span class="tech-pill">Local LLM</span>
-            <span class="tech-pill">Docker</span>
-            <span class="tech-pill">Vector DB</span>
-          </div>
-          <div class="project-links">
-            <a href="https://github.com/Nitro-Builds-Yash/agamemnon" target="_blank" rel="noopener noreferrer" class="link-btn sound-click">
-              <i class="fa-brands fa-github"></i> Repository
-            </a>
-          </div>
-        </article>
       </div>
     </section>
 

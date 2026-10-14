@@ -1,6 +1,7 @@
 /* ==========================================================================
    Athota Yashwanth Portfolio - Core Interactive Engine
-   Starfield Canvas, 8-Bit Audio Synth, Arcade Game, Skills Filter, Contact
+   Starfield Canvas, 8-Bit Audio Synth, Arcade Game, Skills Filter,
+   Radical Interactive Mission Deck (Projects) & Contact Form
    ========================================================================== */
 
 // --- 1. Web Audio API 8-Bit Sound Synthesizer ---
@@ -92,19 +93,19 @@ function initCustomCursor() {
   animateFollower();
 
   // Hover effect over clickable items
-  document.querySelectorAll('a, button, input, select, textarea, .project-card, .skill-item').forEach((el) => {
+  document.querySelectorAll('a, button, input, select, textarea, .project-select-item, .skill-item').forEach((el) => {
     el.addEventListener('mouseenter', () => {
       follower.style.transform = 'translate(-50%, -50%) scale(1.6)';
-      follower.style.borderColor = 'var(--accent-magenta)';
+      follower.style.borderColor = 'var(--accent-gold)';
     });
     el.addEventListener('mouseleave', () => {
       follower.style.transform = 'translate(-50%, -50%) scale(1)';
-      follower.style.borderColor = 'rgba(0, 240, 255, 0.5)';
+      follower.style.borderColor = 'rgba(255, 183, 3, 0.5)';
     });
   });
 }
 
-// --- 3. Dynamic Starfield / Cyber Grid Canvas ---
+// --- 3. Dynamic Starfield / Amber Cyber Grid Canvas ---
 function initBackgroundCanvas() {
   const canvas = document.getElementById('bgCanvas');
   if (!canvas) return;
@@ -135,10 +136,10 @@ function initBackgroundCanvas() {
   function renderStars() {
     ctx.clearRect(0, 0, width, height);
 
-    // Subtle grid lines
-    ctx.strokeStyle = 'rgba(0, 240, 255, 0.025)';
+    // Subtle Amber Grid lines
+    ctx.strokeStyle = 'rgba(255, 183, 3, 0.025)';
     ctx.lineWidth = 1;
-    const gridSize = 60;
+    const gridSize = 65;
     for (let x = 0; x < width; x += gridSize) {
       ctx.beginPath();
       ctx.moveTo(x, 0);
@@ -162,7 +163,7 @@ function initBackgroundCanvas() {
       if (s.x > width) s.x = 0;
       if (s.x < 0) s.x = width;
 
-      ctx.fillStyle = `rgba(0, 240, 255, ${s.opacity})`;
+      ctx.fillStyle = `rgba(255, 183, 3, ${s.opacity})`;
       ctx.fillRect(s.x, s.y, s.size, s.size);
     }
 
@@ -215,7 +216,188 @@ function initTypewriter() {
   typeLoop();
 }
 
-// --- 5. Skills Inventory Filter ---
+// --- 5. INTERACTIVE MISSION DECK (Radical Projects Showcase) ---
+const projectsData = {
+  omnichunk: {
+    badge: 'FLAGSHIP AI PLATFORM',
+    date: 'October 2026',
+    title: 'OmniChunk',
+    tagline: 'Universal Multi-Modal Chunking & Relational Structure Extraction Engine',
+    repoUrl: 'https://github.com/Nitro-Builds-Yash/OmniChunk',
+    desc: 'Architected a parsing engine processing 100+ page complex PDFs with multi-column tables, achieving 98% structural text retention. Preserved contextual relationships across 25+ tabular sections per document, boosting downstream semantic search precision by 40%. Implemented a real-time web dashboard allowing boundary validation of 1,000+ extracted chunks per job.',
+    metrics: [
+      { val: '98%', lbl: 'Structural Text Retention' },
+      { val: '100+ Pages', lbl: 'Complex PDF Support' },
+      { val: '+40%', lbl: 'Search Precision Boost' }
+    ],
+    architecture: `[Input: Complex Multi-Column PDFs & Tables]
+  ➔ [Gemini Vision API + Layout Segmenter]
+  ➔ [Tabular Context Preservation Graph]
+  ➔ [Dynamic Fast Microservices API (FastAPI)]
+  ➔ [Real-Time WebSocket Chunk Boundary Validator]`,
+    stack: ['Python', 'FastAPI', 'Gemini Vision API', 'Docker', 'WebSockets', 'Pydantic']
+  },
+  pulsus: {
+    badge: 'DATA PLATFORM & CRAWLER',
+    date: 'October 2026',
+    title: 'Pulsus-MedScout',
+    tagline: 'Biomedical Literature & Author Intelligence Platform across 34 Repositories',
+    repoUrl: 'https://github.com/Nitro-Builds-Yash/Pulsus-MedScout',
+    desc: 'Engineered a discovery crawler across 34 journal repositories, aggregating metadata for 20,000+ academic publications. Extracted verified researcher contact records with 95% accuracy and automated scheduled exports into formatted Excel reports. Implemented exponential backoff retries and concurrent workers, boosting crawling throughput by 3x while preventing rate-limiting.',
+    metrics: [
+      { val: '34 Repos', lbl: 'Journals Crawled' },
+      { val: '20,000+', lbl: 'Publications Aggregated' },
+      { val: '3x Speed', lbl: 'Worker Concurrency Boost' }
+    ],
+    architecture: `[34 Scientific Journal Repositories]
+  ➔ [Concurrent Async Crawlers + Exponential Backoff]
+  ➔ [BeautifulSoup HTML AST & Metadata Extraction]
+  ➔ [Automated Contact Verification Pipeline (95% Accuracy)]
+  ➔ [Scheduled Excel Automation & Intelligence Reports]`,
+    stack: ['Python', 'BeautifulSoup', 'Data Pipelines', 'Excel Automation', 'Async Workers']
+  },
+  halo: {
+    badge: 'HYBRID RAG QA SYSTEM',
+    date: 'August 2026',
+    title: 'Halo',
+    tagline: 'Question-Answering Document Search & Self-Corrective Multi-Doc Reasoning',
+    repoUrl: 'https://github.com/Nitro-Builds-Yash/halo',
+    desc: 'Constructed a document QA platform processing 50+ concurrent PDF queries with citation confidence scores above 92%. Combined BM25 keyword matching with dense vector embeddings (FAISS), improving retrieval recall by 28% over pure semantic search. Automated unit tests and Docker image publishing via GitHub Actions, reducing deployment validation cycles from 15 to 3 minutes.',
+    metrics: [
+      { val: '92%+', lbl: 'Citation Confidence Score' },
+      { val: '+28%', lbl: 'Recall vs Pure Semantic' },
+      { val: '15m ➔ 3m', lbl: 'CI/CD Deployment Cycle' }
+    ],
+    architecture: `[Query + 50+ Concurrent Research PDFs]
+  ➔ [Hybrid Indexing: BM25 Sparse + FAISS Dense Vector]
+  ➔ [Verification Gates: Context Relevance & Faithfulness]
+  ➔ [Citation Extraction & Confidence Scorer (>92%)]
+  ➔ [Automated Docker & GitHub Actions CI/CD Pipeline]`,
+    stack: ['Python', 'FAISS', 'BM25 Hybrid', 'Docker', 'GitHub Actions', 'REST APIs']
+  },
+  voxcode: {
+    badge: 'AST DEVELOPER TOOLING',
+    date: 'August 2026',
+    title: 'VoxCode',
+    tagline: 'Voice-Assisted AI Coding Agent & AST Code Navigator with Live Diffing',
+    repoUrl: 'https://github.com/Nitro-Builds-Yash/voxcode',
+    desc: 'Created an AST-based static code analyzer parsing repositories with 50,000+ lines of Python code in under 1.8 seconds. Indexed symbols, method signatures, and class references to generate accurate multi-file diff patches with zero syntax breakages. Authored automated Shell scripts to run isolated test suites across 10+ target repositories simultaneously.',
+    metrics: [
+      { val: '<1.8s', lbl: '50k+ LOC AST Indexing' },
+      { val: '0 Break', lbl: 'Syntax Diff Patch Accuracy' },
+      { val: '10+ Repos', lbl: 'Parallel Test Suite Runner' }
+    ],
+    architecture: `[Voice Input / Dev Instruction] ➔ [STT & Intent Parser]
+  ➔ [Python AST Syntax Tree Indexer (50k+ LOC in 1.8s)]
+  ➔ [Symbol Cross-Reference & Multi-File Diff Generator]
+  ➔ [Linux Subprocess Test Runner across 10+ Repositories]`,
+    stack: ['Python', 'AST Analysis', 'Shell Scripting', 'Git', 'STT / TTS', 'Linux']
+  },
+  crypto: {
+    badge: 'BACKEND SERVICES & MONGOOSE',
+    date: 'GitHub Featured',
+    title: 'Crypto-Currency-Simulation',
+    tagline: 'High-Integrity Backend Model for Educational Cryptocurrency Applications',
+    repoUrl: 'https://github.com/Nitro-Builds-Yash/Crypto-Currency-Simulation-main',
+    desc: 'A streamlined and secure backend model for an educational cryptocurrency application. Provides foundational APIs for user management, wallet balance reconciliation, and transaction tracking, demonstrating best practices in Mongoose schema design and data relationships.',
+    metrics: [
+      { val: 'REST API', lbl: 'High-Integrity Endpoints' },
+      { val: '100%', lbl: 'Environment Secrets Isolation' },
+      { val: 'ACID', lbl: 'Mongoose Relational Integrity' }
+    ],
+    architecture: `[Client Request] ➔ [Express.js Router & JWT Auth Middleware]
+  ➔ [Mongoose Transaction Model & Balance Validator]
+  ➔ [MongoDB Relational Schema & Indexed Query Store]`,
+    stack: ['Node.js', 'Express.js', 'MongoDB', 'Mongoose', 'REST APIs', 'JWT']
+  },
+  agamemnon: {
+    badge: 'SELF-HOSTED AI LAB',
+    date: 'Active Workspace',
+    title: 'Agamemnon',
+    tagline: 'Self-Hosted AI Workspace for Private Ingestion & Agent Execution',
+    repoUrl: 'https://github.com/Nitro-Builds-Yash/agamemnon',
+    desc: 'Private, self-hosted AI workspace environment tailored for confidential document ingestion, local RAG retrieval, and secure autonomous developer agent execution without external cloud data leaks.',
+    metrics: [
+      { val: 'Private', lbl: 'Air-Gapped Data Handling' },
+      { val: 'Local RAG', lbl: 'Offline Vector Indexing' },
+      { val: 'Docker', lbl: 'Self-Contained Deployment' }
+    ],
+    architecture: `[Private Code & Data] ➔ [Local Embedding Ingestion]
+  ➔ [Self-Hosted Vector Store] ➔ [Offline Autonomous Agent Execution]`,
+    stack: ['Python', 'Local LLM', 'Vector DB', 'Docker', 'Privacy Architecture']
+  }
+};
+
+function renderProjectStage(key) {
+  const stage = document.getElementById('projectShowcaseStage');
+  const proj = projectsData[key];
+  if (!stage || !proj) return;
+
+  stage.innerHTML = `
+    <div class="stage-top-bar">
+      <div>
+        <div class="stage-badge-group">
+          <span class="stage-badge">${proj.badge}</span>
+          <span class="stage-date"><i class="fa-regular fa-calendar-check"></i> ${proj.date}</span>
+        </div>
+        <h3 class="stage-title">${proj.title}</h3>
+        <p class="stage-tagline">${proj.tagline}</p>
+      </div>
+      <a href="${proj.repoUrl}" target="_blank" rel="noopener noreferrer" class="stage-github-btn sound-click">
+        <i class="fa-brands fa-github"></i> VIEW REPOSITORY
+      </a>
+    </div>
+
+    <p class="stage-description">${proj.desc}</p>
+
+    <!-- Metrics Benchmarks -->
+    <div class="stage-metrics-grid">
+      ${proj.metrics.map(m => `
+        <div class="metric-box">
+          <div class="metric-box-val">${m.val}</div>
+          <div class="metric-box-lbl">${m.lbl}</div>
+        </div>
+      `).join('')}
+    </div>
+
+    <!-- Architecture Terminal Box -->
+    <div class="stage-arch-box">
+      <div class="arch-prompt">
+        <i class="fa-solid fa-code-fork"></i> ARCHITECTURE &amp; EXECUTION PIPELINE
+      </div>
+      <pre style="margin: 0; font-family: var(--font-mono); white-space: pre-wrap;">${proj.architecture}</pre>
+    </div>
+
+    <!-- Tech Stack Pills -->
+    <div class="stage-stack">
+      ${proj.stack.map(s => `<span class="stage-pill">${s}</span>`).join('')}
+    </div>
+  `;
+
+  // Attach sound click to new elements
+  stage.querySelectorAll('.sound-click').forEach(b => {
+    b.addEventListener('click', () => synth.click());
+  });
+}
+
+function initProjectMissionDeck() {
+  const items = document.querySelectorAll('.project-select-item');
+  items.forEach(item => {
+    item.addEventListener('click', () => {
+      synth.click();
+      items.forEach(i => i.classList.remove('active'));
+      item.classList.add('active');
+
+      const projKey = item.getAttribute('data-project');
+      renderProjectStage(projKey);
+    });
+  });
+
+  // Render initial default project
+  renderProjectStage('omnichunk');
+}
+
+// --- 6. Skills Inventory Filter ---
 function initSkillsFilter() {
   const filterBtns = document.querySelectorAll('.skills-filter-bar .filter-btn');
   const skillItems = document.querySelectorAll('.skills-grid .skill-item');
@@ -239,7 +421,7 @@ function initSkillsFilter() {
   });
 }
 
-// --- 6. Retro Arcade Mini-Game: Neural Dodge ---
+// --- 7. Retro Arcade Mini-Game: Neural Dodge ---
 class NeuralDodgeGame {
   constructor() {
     this.canvas = document.getElementById('gameCanvas');
@@ -267,7 +449,7 @@ class NeuralDodgeGame {
       movingRight: false
     };
 
-    this.items = []; // falling tokens & bugs
+    this.items = [];
     this.particles = [];
     this.gameRunning = false;
     this.spawnTimer = 0;
@@ -402,7 +584,7 @@ class NeuralDodgeGame {
     if (!this.gameRunning) return;
 
     // Clear
-    this.ctx.fillStyle = '#05070a';
+    this.ctx.fillStyle = '#020204';
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
     // Movement
@@ -413,14 +595,14 @@ class NeuralDodgeGame {
       this.player.x += this.player.speed;
     }
 
-    // Draw Player (AI Core Vessel)
-    this.ctx.fillStyle = '#00f0ff';
+    // Draw Player (AI Core Vessel with Amber Glow)
+    this.ctx.fillStyle = '#ffb703';
     this.ctx.beginPath();
     this.ctx.roundRect(this.player.x, this.player.y, this.player.width, this.player.height, 6);
     this.ctx.fill();
 
     // Player Core Eye
-    this.ctx.fillStyle = '#fff';
+    this.ctx.fillStyle = '#000';
     this.ctx.fillRect(this.player.x + this.player.width / 2 - 4, this.player.y + 6, 8, 8);
 
     // Spawning items
@@ -436,13 +618,13 @@ class NeuralDodgeGame {
       it.y += it.speed;
 
       // Draw item
-      this.ctx.fillStyle = it.isGood ? '#00ff88' : '#ff0055';
+      this.ctx.fillStyle = it.isGood ? '#ffb703' : '#ff0055';
       this.ctx.beginPath();
       this.ctx.arc(it.x, it.y, it.radius, 0, Math.PI * 2);
       this.ctx.fill();
 
       // Shadow / Glow
-      this.ctx.shadowColor = it.isGood ? '#00ff88' : '#ff0055';
+      this.ctx.shadowColor = it.isGood ? '#ffb703' : '#ff0055';
       this.ctx.shadowBlur = 10;
 
       // Collision Check with player
@@ -455,7 +637,7 @@ class NeuralDodgeGame {
         if (it.isGood) {
           synth.coin();
           this.score += 10;
-          this.explode(it.x, it.y, '#00ff88');
+          this.explode(it.x, it.y, '#ffb703');
         } else {
           synth.hit();
           this.lives--;
@@ -501,7 +683,7 @@ class NeuralDodgeGame {
   }
 }
 
-// --- 7. Contact Form Handler (Transmit Packet) ---
+// --- 8. Contact Form Handler (Transmit Packet) ---
 function initContactForm() {
   const form = document.getElementById('contactForm');
   const alertBox = document.getElementById('formAlert');
@@ -532,7 +714,7 @@ function initContactForm() {
   });
 }
 
-// --- 8. Sound Click Event Listeners ---
+// --- 9. Sound Click Event Listeners ---
 function initSoundEffects() {
   document.querySelectorAll('.sound-click').forEach((btn) => {
     btn.addEventListener('click', () => synth.click());
@@ -545,7 +727,7 @@ function initSoundEffects() {
       synth.enabled = !synth.enabled;
       if (synth.enabled) {
         soundIcon.className = 'fa-solid fa-volume-high';
-        soundToggle.style.borderColor = 'var(--accent-cyan)';
+        soundToggle.style.borderColor = 'var(--accent-gold)';
         synth.coin();
       } else {
         soundIcon.className = 'fa-solid fa-volume-xmark';
@@ -555,7 +737,7 @@ function initSoundEffects() {
   }
 }
 
-// --- 9. Mobile Menu & Resume Modal ---
+// --- 10. Mobile Menu & Resume Modal ---
 function initUIModals() {
   const mobileBtn = document.getElementById('mobileMenuBtn');
   const mobileDrawer = document.getElementById('mobileDrawer');
@@ -609,6 +791,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initCustomCursor();
   initBackgroundCanvas();
   initTypewriter();
+  initProjectMissionDeck();
   initSkillsFilter();
   initContactForm();
   initSoundEffects();
