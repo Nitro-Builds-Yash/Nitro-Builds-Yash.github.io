@@ -727,7 +727,7 @@ function initSoundEffects() {
       synth.enabled = !synth.enabled;
       if (synth.enabled) {
         soundIcon.className = 'fa-solid fa-volume-high';
-        soundToggle.style.borderColor = 'var(--accent-gold)';
+        soundToggle.style.borderColor = 'var(--accent-cyan)';
         synth.coin();
       } else {
         soundIcon.className = 'fa-solid fa-volume-xmark';
