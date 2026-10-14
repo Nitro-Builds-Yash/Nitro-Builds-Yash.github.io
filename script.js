@@ -137,11 +137,11 @@ function initCustomCursor() {
   document.querySelectorAll('a, button, input, select, textarea, .project-select-item, .skill-item').forEach((el) => {
     el.addEventListener('mouseenter', () => {
       follower.style.transform = 'translate(-50%, -50%) scale(1.6)';
-      follower.style.borderColor = 'var(--accent-gold)';
+      follower.style.borderColor = 'var(--neon-cyan)';
     });
     el.addEventListener('mouseleave', () => {
       follower.style.transform = 'translate(-50%, -50%) scale(1)';
-      follower.style.borderColor = 'rgba(255, 183, 3, 0.5)';
+      follower.style.borderColor = 'rgba(0, 240, 255, 0.4)';
     });
   });
 }
@@ -504,7 +504,21 @@ class OdysseyArcadeManager {
     this.particles = [];
     this.spawnTimer = 0;
 
-    // Game 3: Ithaca Tapestry Matrix State
+    // Game 3: Odysseus' Great Bow (12 Axes Challenge)
+    this.bowGame = {
+      bowY: 190,
+      bowAngle: 0,
+      reticleY: 190,
+      reticleSpeed: 4.5,
+      reticleDir: 1,
+      arrow: null,
+      axes: [],
+      passedCount: 0,
+      shotsLeft: 5,
+      wind: 0
+    };
+
+    // Game 4: Ithaca Tapestry Matrix State
     this.tapestry = {
       sequence: [],
       playerSequence: [],
@@ -554,11 +568,17 @@ class OdysseyArcadeManager {
       this.instructionsEl.innerHTML = '<span>[ &larr; / &rarr; ] Move Ship</span> &bull; <span>[ SPACE / A Button ] Fire Cannon</span>';
       this.marqueeEl.innerHTML = '<i class="fa-solid fa-eye"></i> VOYAGE II: CYCLOPS DEFENSE &bull; QUANTUM DISRUPTORS READY &bull; REPEL SPACE GIANTS';
       this.startBtn.innerHTML = '<i class="fa-solid fa-crosshairs"></i> COMMENCE BATTLE';
+    } else if (mode === 'bow') {
+      this.titleEl.textContent = 'ODYSSEUS\' GREAT BOW';
+      this.descEl.innerHTML = 'String the great bow of King Odysseus! Time your release when the oscillating reticle aligns with the 12 bronze axes. Thread the arrow clean through all ring sockets!';
+      this.instructionsEl.innerHTML = '<span>[ SPACE / A Button / Click ] Release Arrow when Aligned</span> &bull; <span>[ 5 Quiver Arrows ]</span>';
+      this.marqueeEl.innerHTML = '<i class="fa-solid fa-crosshairs"></i> VOYAGE III: THE 12 AXE HEADS &bull; ONLY ODYSSEUS CAN STRING THE SACRED BOW';
+      this.startBtn.innerHTML = '<i class="fa-solid fa-bullseye"></i> STRING THE BOW';
     } else if (mode === 'tapestry') {
       this.titleEl.textContent = 'ITHACA TAPESTRY MATRIX';
       this.descEl.innerHTML = 'Decode Penelope\'s warp pattern! Watch the celestial navigation glyphs light up in sequence, then click or press the nodes in the exact Odyssey memory order.';
       this.instructionsEl.innerHTML = '<span>[ Click / Tap Glyphs ] Follow Celestial Star Sequence</span>';
-      this.marqueeEl.innerHTML = '<i class="fa-solid fa-puzzle-piece"></i> VOYAGE III: ITHACA MATRIX &bull; PENELOPE\'S TAPESTRY &bull; RECALL STAR COORDINATES';
+      this.marqueeEl.innerHTML = '<i class="fa-solid fa-puzzle-piece"></i> VOYAGE IV: ITHACA MATRIX &bull; PENELOPE\'S TAPESTRY &bull; RECALL STAR COORDINATES';
       this.startBtn.innerHTML = '<i class="fa-solid fa-brain"></i> BEGIN RECONSTRUCTION';
     }
 
@@ -595,6 +615,8 @@ class OdysseyArcadeManager {
         e.preventDefault();
         if (this.currentGame === 'cyclops' && this.gameRunning) {
           this.fireLaser();
+        } else if (this.currentGame === 'bow' && this.gameRunning) {
+          this.releaseBowArrow();
         }
       }
     });
@@ -632,6 +654,8 @@ class OdysseyArcadeManager {
       actionA.addEventListener('click', () => {
         if (this.currentGame === 'cyclops' && this.gameRunning) {
           this.fireLaser();
+        } else if (this.currentGame === 'bow' && this.gameRunning) {
+          this.releaseBowArrow();
         } else if (!this.gameRunning) {
           this.startGame();
         }
@@ -645,9 +669,14 @@ class OdysseyArcadeManager {
       });
     }
 
-    // Tapestry canvas click handler
+    // Tapestry canvas click handler / Bow release
     this.canvas.addEventListener('click', (e) => {
-      if (this.currentGame !== 'tapestry' || !this.gameRunning || this.tapestry.animating) return;
+      if (!this.gameRunning) return;
+      if (this.currentGame === 'bow') {
+        this.releaseBowArrow();
+        return;
+      }
+      if (this.currentGame !== 'tapestry' || this.tapestry.animating) return;
       const rect = this.canvas.getBoundingClientRect();
       const scaleX = this.canvas.width / rect.width;
       const scaleY = this.canvas.height / rect.height;
@@ -685,12 +714,15 @@ class OdysseyArcadeManager {
     this.particles = [];
     this.player.x = (this.canvas.width - this.player.width) / 2;
     this.gameRunning = true;
-    this.updateHud();
     this.overlay.style.display = 'none';
 
-    if (this.currentGame === 'tapestry') {
+    if (this.currentGame === 'bow') {
+      this.initBowRound();
+    } else if (this.currentGame === 'tapestry') {
       this.initTapestryRound();
     }
+
+    this.updateHud();
 
     if (this.animId) cancelAnimationFrame(this.animId);
     this.loop();
@@ -714,11 +746,31 @@ class OdysseyArcadeManager {
     this.overlay.style.display = 'flex';
   }
 
+  victory(customMsg) {
+    this.gameRunning = false;
+    synth.powerup();
+
+    if (this.score > this.highScore) {
+      this.highScore = this.score;
+      localStorage.setItem(`odyssey_high_${this.currentGame}`, this.highScore);
+      if (this.highScoreDisplay) this.highScoreDisplay.textContent = this.highScore;
+    }
+
+    if (this.lastScoreDisplay) this.lastScoreDisplay.textContent = this.score;
+    this.titleEl.textContent = 'KINGDOM RECLAIMED!';
+    this.titleEl.style.color = 'var(--neon-cyan)';
+    this.descEl.innerHTML = customMsg || `Odysseus has threaded the 12 bronze axes! Score: <strong>${this.score} pts</strong>. Ithaca honors its true king!`;
+    this.startBtn.innerHTML = '<i class="fa-solid fa-trophy"></i> CLAIM VICTORY';
+    this.overlay.style.display = 'flex';
+  }
+
   updateHud() {
     if (this.scoreHud) this.scoreHud.textContent = this.score;
     if (this.livesHud) {
       if (this.currentGame === 'tapestry') {
         this.livesHud.textContent = `L-${this.tapestry.level}`;
+      } else if (this.currentGame === 'bow') {
+        this.livesHud.textContent = `${this.bowGame.shotsLeft} ARROWS`;
       } else {
         let hearts = '';
         for (let i = 0; i < this.lives; i++) hearts += '♥';
@@ -748,6 +800,212 @@ class OdysseyArcadeManager {
     this.ctx.fillStyle = 'rgba(0, 240, 255, 0.4)';
     for (let i = 0; i < 35; i++) {
       this.ctx.fillRect((i * 37) % 600, (i * 29) % 380, 2, 2);
+    }
+  }
+
+  // --- Odysseus Bow Game Methods ---
+  initBowRound() {
+    this.bowGame.reticleY = 190;
+    this.bowGame.reticleDir = 1;
+    this.bowGame.reticleSpeed = 4.0;
+    this.bowGame.arrow = null;
+    this.bowGame.shotsLeft = 5;
+    this.bowGame.passedCount = 0;
+    this.bowGame.axes = [];
+
+    // Setup 12 Axe Heads in a row from left to right
+    const startX = 160;
+    const spacing = 32;
+    for (let i = 0; i < 12; i++) {
+      this.bowGame.axes.push({
+        x: startX + i * spacing,
+        targetY: 190 + Math.sin(i * 0.4) * 8, // slight wave
+        ringRadius: 10,
+        cleared: false
+      });
+    }
+  }
+
+  releaseBowArrow() {
+    if (this.bowGame.arrow || this.bowGame.shotsLeft <= 0) return;
+    synth.laser();
+    this.bowGame.shotsLeft--;
+    this.updateHud();
+
+    // Aim based on oscillating reticle
+    const angle = (this.bowGame.reticleY - 190) * 0.005;
+    this.bowGame.arrow = {
+      x: 70,
+      y: 190,
+      vx: 12,
+      vy: (this.bowGame.reticleY - 190) * 0.08,
+      inFlight: true,
+      ringsPierced: 0
+    };
+  }
+
+  updateBowGame() {
+    const bg = this.bowGame;
+
+    // Draw Great Bow on Left
+    this.ctx.strokeStyle = '#38bdf8';
+    this.ctx.lineWidth = 4;
+    this.ctx.beginPath();
+    this.ctx.arc(45, 190, 48, -Math.PI / 2.6, Math.PI / 2.6, false);
+    this.ctx.stroke();
+
+    // Bowstring
+    this.ctx.strokeStyle = '#00f0ff';
+    this.ctx.lineWidth = 1.5;
+    this.ctx.beginPath();
+    this.ctx.moveTo(60, 150);
+    if (!bg.arrow) {
+      this.ctx.lineTo(bg.reticleY > 190 ? 45 : 48, 190);
+    } else {
+      this.ctx.lineTo(60, 190);
+    }
+    this.ctx.lineTo(60, 230);
+    this.ctx.stroke();
+
+    // Draw the 12 Axe Heads with rings
+    bg.axes.forEach((axe, index) => {
+      // Axe shaft
+      this.ctx.strokeStyle = '#475569';
+      this.ctx.lineWidth = 3;
+      this.ctx.beginPath();
+      this.ctx.moveTo(axe.x, axe.targetY - 26);
+      this.ctx.lineTo(axe.x, axe.targetY + 45);
+      this.ctx.stroke();
+
+      // Axe Blade
+      this.ctx.fillStyle = axe.cleared ? '#00f0ff' : '#64748b';
+      this.ctx.beginPath();
+      this.ctx.moveTo(axe.x - 6, axe.targetY - 18);
+      this.ctx.lineTo(axe.x + 8, axe.targetY - 24);
+      this.ctx.lineTo(axe.x + 8, axe.targetY - 6);
+      this.ctx.closePath();
+      this.ctx.fill();
+
+      // Iron Ring Socket (Hole to shoot through)
+      this.ctx.strokeStyle = axe.cleared ? '#00f0ff' : '#94a3b8';
+      this.ctx.lineWidth = 2;
+      this.ctx.beginPath();
+      this.ctx.arc(axe.x, axe.targetY, axe.ringRadius, 0, Math.PI * 2);
+      this.ctx.stroke();
+
+      // Ring index marker
+      this.ctx.fillStyle = axe.cleared ? '#00f0ff' : '#64748b';
+      this.ctx.font = '7px "Press Start 2P"';
+      this.ctx.textAlign = 'center';
+      this.ctx.fillText(`${index + 1}`, axe.x, axe.targetY + 34);
+    });
+
+    // Reticle Oscillating movement when aiming
+    if (!bg.arrow) {
+      bg.reticleY += bg.reticleSpeed * bg.reticleDir;
+      if (bg.reticleY > 260) {
+        bg.reticleY = 260;
+        bg.reticleDir = -1;
+      } else if (bg.reticleY < 120) {
+        bg.reticleY = 120;
+        bg.reticleDir = 1;
+      }
+
+      // Draw Aiming Reticle
+      this.ctx.strokeStyle = '#00f0ff';
+      this.ctx.lineWidth = 2;
+      this.ctx.beginPath();
+      this.ctx.arc(160, bg.reticleY, 14, 0, Math.PI * 2);
+      this.ctx.moveTo(140, bg.reticleY);
+      this.ctx.lineTo(180, bg.reticleY);
+      this.ctx.moveTo(160, bg.reticleY - 20);
+      this.ctx.lineTo(160, bg.reticleY + 20);
+      this.ctx.stroke();
+
+      // Aim Laser guideline
+      this.ctx.strokeStyle = 'rgba(0, 240, 255, 0.25)';
+      this.ctx.setLineDash([4, 4]);
+      this.ctx.beginPath();
+      this.ctx.moveTo(60, 190);
+      this.ctx.lineTo(550, bg.reticleY + (bg.reticleY - 190) * 2.8);
+      this.ctx.stroke();
+      this.ctx.setLineDash([]);
+    }
+
+    // Arrow Flight Simulation
+    if (bg.arrow && bg.arrow.inFlight) {
+      const arr = bg.arrow;
+      arr.x += arr.vx;
+      arr.y += arr.vy;
+
+      // Draw Gold/Cyan Sacred Arrow
+      this.ctx.strokeStyle = '#00f0ff';
+      this.ctx.lineWidth = 3;
+      this.ctx.beginPath();
+      this.ctx.moveTo(arr.x - 22, arr.y);
+      this.ctx.lineTo(arr.x, arr.y);
+      this.ctx.stroke();
+
+      // Arrow tip
+      this.ctx.fillStyle = '#ffffff';
+      this.ctx.beginPath();
+      this.ctx.moveTo(arr.x + 6, arr.y);
+      this.ctx.lineTo(arr.x, arr.y - 4);
+      this.ctx.lineTo(arr.x, arr.y + 4);
+      this.ctx.closePath();
+      this.ctx.fill();
+
+      // Arrow feathers
+      this.ctx.strokeStyle = '#38bdf8';
+      this.ctx.lineWidth = 2;
+      this.ctx.beginPath();
+      this.ctx.moveTo(arr.x - 22, arr.y - 4);
+      this.ctx.lineTo(arr.x - 16, arr.y);
+      this.ctx.lineTo(arr.x - 22, arr.y + 4);
+      this.ctx.stroke();
+
+      // Check collision with Axes
+      bg.axes.forEach((axe) => {
+        if (!axe.cleared && Math.abs(arr.x - axe.x) < 8) {
+          const distFromHole = Math.abs(arr.y - axe.targetY);
+          if (distFromHole <= axe.ringRadius) {
+            // Passed through ring socket!
+            axe.cleared = true;
+            arr.ringsPierced++;
+            this.score += 25;
+            synth.coin();
+            this.explode(axe.x, axe.targetY, '#00f0ff');
+            this.updateHud();
+          } else {
+            // Struck axe shaft/metal rim!
+            synth.hit();
+            this.explode(axe.x, arr.y, '#ff0055');
+            arr.inFlight = false;
+            bg.arrow = null;
+          }
+        }
+      });
+
+      // Cleared all 12 axes?
+      if (arr.ringsPierced >= 12) {
+        this.score += 300;
+        this.updateHud();
+        this.victory('ODYSSEUS PIERCED ALL 12 AXE RINGS! THE SUITORS FLEE IN TERROR!');
+        return;
+      }
+
+      // Flew off screen
+      if (arr.x > this.canvas.width + 40) {
+        arr.inFlight = false;
+        bg.arrow = null;
+      }
+    }
+
+    // Check Out of Shots
+    if (!bg.arrow && bg.shotsLeft <= 0 && this.gameRunning) {
+      if (bg.axes.filter(a => a.cleared).length < 12) {
+        this.gameOver(`Quiver exhausted! Odysseus pierced ${bg.axes.filter(a => a.cleared).length}/12 axe rings.`);
+      }
     }
   }
 
@@ -825,6 +1083,8 @@ class OdysseyArcadeManager {
       this.updateDodgeGame();
     } else if (this.currentGame === 'cyclops') {
       this.updateCyclopsGame();
+    } else if (this.currentGame === 'bow') {
+      this.updateBowGame();
     } else if (this.currentGame === 'tapestry') {
       this.renderTapestry();
     }
