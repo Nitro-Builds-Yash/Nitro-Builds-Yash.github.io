@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   
   <!-- Stylesheet (cache-busted for instant visual update) -->
-  <link rel="stylesheet" href="style.css?v=2.2" />
+  <link rel="stylesheet" href="style.css?v=2.4" />
 </head>
 <body>
   <!-- Custom Game Cursor -->
@@ -619,17 +619,38 @@
       </div>
     </section>
 
-    <!-- INTERACTIVE RETRO ARCADE ZONE (Game Element) -->
+    <!-- INTERACTIVE RETRO ARCADE ZONE (The Odysseus Arcade Odyssey) -->
     <section class="section-container" id="arcade">
       <div class="section-header">
-        <span class="sub-badge"><i class="fa-solid fa-gamepad"></i> MINI-GAME EXPERIENCE</span>
-        <h2 class="section-title">Neural Dodge 2026</h2>
+        <span class="sub-badge"><i class="fa-solid fa-ship"></i> THE ODYSSEY ARCADE &bull; MYTH &amp; MACHINES</span>
+        <h2 class="section-title">The Grand Odyssey Arcade</h2>
+        <p style="color: var(--text-secondary); max-width: 650px; margin: 0.5rem auto 0; font-size: 0.95rem;">
+          Inspired by the epic cosmic voyage of <em>The Odysseus</em>. Brave the sirens of corrupted tokens, fire quantum disruptors at deep space cyclopes, and weave the tapestry of Ithaca.
+        </p>
         <div class="header-line"></div>
+      </div>
+
+      <!-- Arcade Game Switcher Tabs -->
+      <div class="arcade-tabs-bar">
+        <button class="arcade-tab-btn active sound-click" data-game="dodge">
+          <i class="fa-solid fa-compass"></i>
+          <span>1. NEURAL ODYSSEY (DODGE)</span>
+        </button>
+        <button class="arcade-tab-btn sound-click" data-game="cyclops">
+          <i class="fa-solid fa-eye"></i>
+          <span>2. CYCLOPS DEFENSE (SHOOTER)</span>
+        </button>
+        <button class="arcade-tab-btn sound-click" data-game="tapestry">
+          <i class="fa-solid fa-puzzle-piece"></i>
+          <span>3. ITHACA MATRIX (MEMORY)</span>
+        </button>
       </div>
 
       <div class="arcade-cabinet">
         <div class="cabinet-marquee">
-          <span class="marquee-text"><i class="fa-solid fa-fire"></i> INSERT COIN &bull; DODGE CORRUPTED TOKENS &bull; COLLECT EMBEDDINGS</span>
+          <span class="marquee-text" id="marqueeText">
+            <i class="fa-solid fa-anchor"></i> ODYSSEUS FLIGHT DECK &bull; INSERT COIN &bull; NAVIGATE SCYLLA &amp; CHARYBDIS
+          </span>
         </div>
 
         <div class="arcade-screen-wrapper">
@@ -638,19 +659,19 @@
           <!-- Game Overlay Start / Game Over -->
           <div class="game-overlay" id="gameOverlay">
             <div class="overlay-content">
-              <h3 class="game-title" id="gameTitle">NEURAL DODGE</h3>
+              <h3 class="game-title" id="gameTitle">NEURAL ODYSSEY</h3>
               <p class="game-desc" id="gameDesc">
-                Guide your AI Agent with Arrow Keys / A-D or Touch / Mouse. Collect <span class="green-text">Vector Chunks (+10 pts)</span> and dodge <span class="red-text">Hallucination Bugs</span>!
+                Guide Odysseus' Star-Vessel with [&larr;] and [&rarr;] or Touch. Collect <span class="green-text">Golden Ambrosia Chunks (+10 pts)</span> and dodge <span class="red-text">Siren Glitches</span>!
               </p>
               <div class="score-board">
                 <span>HIGH SCORE: <strong id="highScoreVal">0</strong></span>
                 <span>LAST SCORE: <strong id="lastScoreVal">0</strong></span>
               </div>
               <button class="arcade-play-btn sound-click" id="startGameBtn">
-                <i class="fa-solid fa-play"></i> START GAME (P1)
+                <i class="fa-solid fa-play"></i> LAUNCH VOYAGE
               </button>
-              <div class="game-instructions">
-                <span>[ &larr; / A ] Move Left</span> &bull; <span>[ &rarr; / D ] Move Right</span> &bull; <span>[ SPACE ] Pause</span>
+              <div class="game-instructions" id="gameInstructions">
+                <span>[ &larr; / A ] Port</span> &bull; <span>[ &rarr; / D ] Starboard</span> &bull; <span>[ SPACE ] Fire / Action</span>
               </div>
             </div>
           </div>
@@ -658,16 +679,16 @@
 
         <div class="cabinet-controls">
           <div class="dpad-zone">
-            <button class="control-btn" id="btnLeft"><i class="fa-solid fa-caret-left"></i> LEFT</button>
-            <button class="control-btn" id="btnRight">RIGHT <i class="fa-solid fa-caret-right"></i></button>
+            <button class="control-btn" id="btnLeft"><i class="fa-solid fa-caret-left"></i> PORT</button>
+            <button class="control-btn" id="btnRight">STARBOARD <i class="fa-solid fa-caret-right"></i></button>
           </div>
           <div class="arcade-status-panel">
             <span class="hud-stat">SCORE: <strong id="hudScore">0</strong></span>
-            <span class="hud-stat">LIVES: <strong id="hudLives">&hearts;&hearts;&hearts;</strong></span>
+            <span class="hud-stat">HULL: <strong id="hudLives">&hearts;&hearts;&hearts;</strong></span>
           </div>
           <div class="actions-zone">
-            <button class="action-btn red-btn" id="btnActionA">A</button>
-            <button class="action-btn yellow-btn" id="btnActionB">B</button>
+            <button class="action-btn red-btn sound-click" id="btnActionA" title="Primary Action / Fire">A</button>
+            <button class="action-btn cyan-btn sound-click" id="btnActionB" title="Secondary / Start">B</button>
           </div>
         </div>
       </div>

@@ -54,7 +54,48 @@ class SoundSynth {
   }
 
   hit() {
-    this.playTone(140, 'sawtooth', 0.15, 0.1);
+    this.playTone(110, 'sawtooth', 0.18, 0.12);
+  }
+
+  laser() {
+    // Pitch-shifted descending space cannon
+    if (!this.enabled) return;
+    try {
+      this.init();
+      if (!this.ctx) return;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(880, this.ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(120, this.ctx.currentTime + 0.12);
+      gain.gain.setValueAtTime(0.08, this.ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.12);
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+      osc.start();
+      osc.stop(this.ctx.currentTime + 0.12);
+    } catch(e) {}
+  }
+
+  odysseyHorn() {
+    // Cinematic ominous brass/synthesizer drone chord (Pitch tone of The Odyssey)
+    if (!this.enabled) return;
+    try {
+      this.init();
+      if (!this.ctx) return;
+      [65.41, 98.00, 130.81, 196.00].forEach((f) => { // C2 / G2 cinematic pitch
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(f, this.ctx.currentTime);
+        gain.gain.setValueAtTime(0.04, this.ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + 1.2);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start();
+        osc.stop(this.ctx.currentTime + 1.2);
+      });
+    } catch(e) {}
   }
 
   powerup() {
@@ -421,47 +462,123 @@ function initSkillsFilter() {
   });
 }
 
-// --- 7. Retro Arcade Mini-Game: Neural Dodge ---
-class NeuralDodgeGame {
+// --- 7. The Grand Odyssey Multi-Game Arcade Engine ---
+class OdysseyArcadeManager {
   constructor() {
     this.canvas = document.getElementById('gameCanvas');
     if (!this.canvas) return;
     this.ctx = this.canvas.getContext('2d');
     this.overlay = document.getElementById('gameOverlay');
     this.startBtn = document.getElementById('startGameBtn');
+    this.titleEl = document.getElementById('gameTitle');
+    this.descEl = document.getElementById('gameDesc');
+    this.instructionsEl = document.getElementById('gameInstructions');
+    this.marqueeEl = document.getElementById('marqueeText');
+
     this.scoreHud = document.getElementById('hudScore');
     this.livesHud = document.getElementById('hudLives');
     this.highScoreDisplay = document.getElementById('highScoreVal');
     this.lastScoreDisplay = document.getElementById('lastScoreVal');
 
+    this.currentGame = 'dodge'; // 'dodge' | 'cyclops' | 'tapestry'
     this.score = 0;
     this.lives = 3;
-    this.highScore = parseInt(localStorage.getItem('neural_dodge_highscore') || '0', 10);
-    this.highScoreDisplay.textContent = this.highScore;
+    this.gameRunning = false;
+    this.animId = null;
 
+    // Game 1 & 2: Ship / Player state
     this.player = {
       x: 275,
       y: 330,
-      width: 50,
-      height: 24,
+      width: 48,
+      height: 22,
       speed: 7,
       movingLeft: false,
       movingRight: false
     };
 
+    // Shared Entities
     this.items = [];
+    this.lasers = [];
+    this.enemies = [];
     this.particles = [];
-    this.gameRunning = false;
     this.spawnTimer = 0;
-    this.animId = null;
 
+    // Game 3: Ithaca Tapestry Matrix State
+    this.tapestry = {
+      sequence: [],
+      playerSequence: [],
+      level: 1,
+      animating: false,
+      grid: [
+        { id: 0, x: 170, y: 80, size: 70, color: '#00f0ff', label: 'ITHACA', active: false },
+        { id: 1, x: 260, y: 80, size: 70, color: '#38bdf8', label: 'AEAEA', active: false },
+        { id: 2, x: 350, y: 80, size: 70, color: '#6366f1', label: 'TROY', active: false },
+        { id: 3, x: 170, y: 170, size: 70, color: '#10b981', label: 'OGYGIA', active: false },
+        { id: 4, x: 260, y: 170, size: 70, color: '#f43f5e', label: 'CYCLOPS', active: false },
+        { id: 5, x: 350, y: 170, size: 70, color: '#e0e7ff', label: 'SIRENS', active: false }
+      ]
+    };
+
+    this.loadHighScores();
     this.bindEvents();
+    this.setGameMode('dodge');
+  }
+
+  loadHighScores() {
+    const key = `odyssey_high_${this.currentGame}`;
+    this.highScore = parseInt(localStorage.getItem(key) || '0', 10);
+    if (this.highScoreDisplay) this.highScoreDisplay.textContent = this.highScore;
+  }
+
+  setGameMode(mode) {
+    this.currentGame = mode;
+    this.gameRunning = false;
+    if (this.animId) cancelAnimationFrame(this.animId);
+    this.loadHighScores();
+
+    // Update Tab Buttons
+    document.querySelectorAll('.arcade-tab-btn').forEach((btn) => {
+      btn.classList.toggle('active', btn.getAttribute('data-game') === mode);
+    });
+
+    if (mode === 'dodge') {
+      this.titleEl.textContent = 'NEURAL ODYSSEY';
+      this.descEl.innerHTML = 'Guide Odysseus\' Star-Vessel past Scylla & Charybdis! Collect <span class="green-text">Golden Ambrosia Chunks (+10 pts)</span> and dodge <span class="red-text">Siren Glitches</span>.';
+      this.instructionsEl.innerHTML = '<span>[ &larr; / A ] Port</span> &bull; <span>[ &rarr; / D ] Starboard</span> &bull; <span>[ Touch / Mouse ] Steer</span>';
+      this.marqueeEl.innerHTML = '<i class="fa-solid fa-anchor"></i> VOYAGE I: NEURAL ODYSSEY &bull; DODGE THE SIRENS &bull; SAFE PASSAGE TO ITHACA';
+      this.startBtn.innerHTML = '<i class="fa-solid fa-play"></i> LAUNCH VOYAGE';
+    } else if (mode === 'cyclops') {
+      this.titleEl.textContent = 'CYCLOPS DEFENSE';
+      this.descEl.innerHTML = 'Deep Space Polyphemus & Cyclops Drones are targeting your fleet! Use [SPACE] or Button [A] to fire <span class="green-text">Disruptor Cannons</span> before they breach your hull.';
+      this.instructionsEl.innerHTML = '<span>[ &larr; / &rarr; ] Move Ship</span> &bull; <span>[ SPACE / A Button ] Fire Cannon</span>';
+      this.marqueeEl.innerHTML = '<i class="fa-solid fa-eye"></i> VOYAGE II: CYCLOPS DEFENSE &bull; QUANTUM DISRUPTORS READY &bull; REPEL SPACE GIANTS';
+      this.startBtn.innerHTML = '<i class="fa-solid fa-crosshairs"></i> COMMENCE BATTLE';
+    } else if (mode === 'tapestry') {
+      this.titleEl.textContent = 'ITHACA TAPESTRY MATRIX';
+      this.descEl.innerHTML = 'Decode Penelope\'s warp pattern! Watch the celestial navigation glyphs light up in sequence, then click or press the nodes in the exact Odyssey memory order.';
+      this.instructionsEl.innerHTML = '<span>[ Click / Tap Glyphs ] Follow Celestial Star Sequence</span>';
+      this.marqueeEl.innerHTML = '<i class="fa-solid fa-puzzle-piece"></i> VOYAGE III: ITHACA MATRIX &bull; PENELOPE\'S TAPESTRY &bull; RECALL STAR COORDINATES';
+      this.startBtn.innerHTML = '<i class="fa-solid fa-brain"></i> BEGIN RECONSTRUCTION';
+    }
+
+    this.overlay.style.display = 'flex';
+    this.renderIdlePreview();
   }
 
   bindEvents() {
+    // Mode Switcher Tabs
+    document.querySelectorAll('.arcade-tab-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        synth.click();
+        const mode = btn.getAttribute('data-game');
+        this.setGameMode(mode);
+      });
+    });
+
     if (this.startBtn) {
       this.startBtn.addEventListener('click', () => {
-        synth.powerup();
+        synth.odysseyHorn();
         this.startGame();
       });
     }
@@ -473,6 +590,12 @@ class NeuralDodgeGame {
       }
       if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') {
         this.player.movingRight = true;
+      }
+      if (e.key === ' ' || e.code === 'Space') {
+        e.preventDefault();
+        if (this.currentGame === 'cyclops' && this.gameRunning) {
+          this.fireLaser();
+        }
       }
     });
 
@@ -507,64 +630,101 @@ class NeuralDodgeGame {
     const actionA = document.getElementById('btnActionA');
     if (actionA) {
       actionA.addEventListener('click', () => {
+        if (this.currentGame === 'cyclops' && this.gameRunning) {
+          this.fireLaser();
+        } else if (!this.gameRunning) {
+          this.startGame();
+        }
+      });
+    }
+
+    const actionB = document.getElementById('btnActionB');
+    if (actionB) {
+      actionB.addEventListener('click', () => {
         if (!this.gameRunning) this.startGame();
       });
     }
+
+    // Tapestry canvas click handler
+    this.canvas.addEventListener('click', (e) => {
+      if (this.currentGame !== 'tapestry' || !this.gameRunning || this.tapestry.animating) return;
+      const rect = this.canvas.getBoundingClientRect();
+      const scaleX = this.canvas.width / rect.width;
+      const scaleY = this.canvas.height / rect.height;
+      const clickX = (e.clientX - rect.left) * scaleX;
+      const clickY = (e.clientY - rect.top) * scaleY;
+
+      this.tapestry.grid.forEach((node) => {
+        if (
+          clickX >= node.x && clickX <= node.x + node.size &&
+          clickY >= node.y && clickY <= node.y + node.size
+        ) {
+          this.handleTapestryInput(node.id);
+        }
+      });
+    });
+  }
+
+  fireLaser() {
+    synth.laser();
+    this.lasers.push({
+      x: this.player.x + this.player.width / 2 - 2,
+      y: this.player.y - 4,
+      width: 4,
+      height: 14,
+      speed: 9
+    });
   }
 
   startGame() {
     this.score = 0;
     this.lives = 3;
     this.items = [];
+    this.lasers = [];
+    this.enemies = [];
     this.particles = [];
     this.player.x = (this.canvas.width - this.player.width) / 2;
     this.gameRunning = true;
     this.updateHud();
     this.overlay.style.display = 'none';
 
+    if (this.currentGame === 'tapestry') {
+      this.initTapestryRound();
+    }
+
     if (this.animId) cancelAnimationFrame(this.animId);
     this.loop();
   }
 
-  gameOver() {
+  gameOver(customMsg) {
     this.gameRunning = false;
     synth.hit();
 
     if (this.score > this.highScore) {
       this.highScore = this.score;
-      localStorage.setItem('neural_dodge_highscore', this.highScore);
-      this.highScoreDisplay.textContent = this.highScore;
+      localStorage.setItem(`odyssey_high_${this.currentGame}`, this.highScore);
+      if (this.highScoreDisplay) this.highScoreDisplay.textContent = this.highScore;
     }
 
-    this.lastScoreDisplay.textContent = this.score;
-    const title = document.getElementById('gameTitle');
-    const desc = document.getElementById('gameDesc');
-    title.textContent = 'SYSTEM BREACHED!';
-    title.style.color = 'var(--arcade-red)';
-    desc.innerHTML = `Model collapsed! Final Score: <strong>${this.score} pts</strong>. Try again!`;
-    this.startBtn.innerHTML = '<i class="fa-solid fa-rotate-right"></i> INSERT COIN (RETRY)';
+    if (this.lastScoreDisplay) this.lastScoreDisplay.textContent = this.score;
+    this.titleEl.textContent = 'HULL BREACHED!';
+    this.titleEl.style.color = 'var(--arcade-red)';
+    this.descEl.innerHTML = customMsg || `Vessel lost in the cosmic ocean! Voyage Score: <strong>${this.score} pts</strong>. Try again!`;
+    this.startBtn.innerHTML = '<i class="fa-solid fa-rotate-right"></i> RE-ENTER THE VOYAGE';
     this.overlay.style.display = 'flex';
   }
 
   updateHud() {
     if (this.scoreHud) this.scoreHud.textContent = this.score;
     if (this.livesHud) {
-      let hearts = '';
-      for (let i = 0; i < this.lives; i++) hearts += '♥';
-      this.livesHud.textContent = hearts || 'DEAD';
+      if (this.currentGame === 'tapestry') {
+        this.livesHud.textContent = `L-${this.tapestry.level}`;
+      } else {
+        let hearts = '';
+        for (let i = 0; i < this.lives; i++) hearts += '♥';
+        this.livesHud.textContent = hearts || 'EMPTY';
+      }
     }
-  }
-
-  spawnItem() {
-    const isGood = Math.random() > 0.38;
-    this.items.push({
-      x: Math.random() * (this.canvas.width - 30) + 15,
-      y: -20,
-      radius: isGood ? 10 : 12,
-      speed: Math.random() * 2 + 2.5 + this.score * 0.015,
-      isGood: isGood,
-      label: isGood ? '+10' : 'BUG'
-    });
   }
 
   explode(x, y, color) {
@@ -580,88 +740,96 @@ class NeuralDodgeGame {
     }
   }
 
+  renderIdlePreview() {
+    this.ctx.fillStyle = '#020610';
+    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+    // Stars
+    this.ctx.fillStyle = 'rgba(0, 240, 255, 0.4)';
+    for (let i = 0; i < 35; i++) {
+      this.ctx.fillRect((i * 37) % 600, (i * 29) % 380, 2, 2);
+    }
+  }
+
+  // --- Tapestry Memory Game Functions ---
+  initTapestryRound() {
+    this.tapestry.sequence = [];
+    this.tapestry.playerSequence = [];
+    this.tapestry.level = 1;
+    this.nextTapestrySequence();
+  }
+
+  nextTapestrySequence() {
+    this.tapestry.playerSequence = [];
+    this.tapestry.sequence.push(Math.floor(Math.random() * this.tapestry.grid.length));
+    this.tapestry.animating = true;
+    this.updateHud();
+
+    // Playback sequence
+    let step = 0;
+    const interval = setInterval(() => {
+      if (step < this.tapestry.sequence.length) {
+        const nodeId = this.tapestry.sequence[step];
+        this.highlightTapestryNode(nodeId);
+        synth.playTone(300 + nodeId * 80, 'sine', 0.2, 0.08);
+        step++;
+      } else {
+        clearInterval(interval);
+        this.tapestry.animating = false;
+      }
+    }, 600);
+  }
+
+  highlightTapestryNode(nodeId) {
+    const node = this.tapestry.grid.find((n) => n.id === nodeId);
+    if (!node) return;
+    node.active = true;
+    setTimeout(() => { node.active = false; }, 320);
+  }
+
+  handleTapestryInput(nodeId) {
+    this.highlightTapestryNode(nodeId);
+    synth.playTone(300 + nodeId * 80, 'sine', 0.15, 0.08);
+    this.tapestry.playerSequence.push(nodeId);
+
+    const curIdx = this.tapestry.playerSequence.length - 1;
+    if (this.tapestry.playerSequence[curIdx] !== this.tapestry.sequence[curIdx]) {
+      this.gameOver(`Navigation warp snapped at Level ${this.tapestry.level}! Ithaca remains elusive.`);
+      return;
+    }
+
+    if (this.tapestry.playerSequence.length === this.tapestry.sequence.length) {
+      synth.coin();
+      this.score += this.tapestry.level * 25;
+      this.tapestry.level++;
+      this.updateHud();
+      setTimeout(() => this.nextTapestrySequence(), 800);
+    }
+  }
+
+  // --- Main Animation Loop ---
   loop() {
     if (!this.gameRunning) return;
 
-    // Clear
-    this.ctx.fillStyle = '#020204';
+    this.ctx.fillStyle = '#020610';
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
-    // Movement
-    if (this.player.movingLeft && this.player.x > 0) {
-      this.player.x -= this.player.speed;
-    }
-    if (this.player.movingRight && this.player.x < this.canvas.width - this.player.width) {
-      this.player.x += this.player.speed;
+    // Stars drift
+    this.ctx.fillStyle = 'rgba(0, 240, 255, 0.3)';
+    for (let i = 0; i < 20; i++) {
+      this.ctx.fillRect((i * 45 + Date.now() * 0.03) % 600, (i * 35) % 380, 2, 2);
     }
 
-    // Draw Player (AI Core Vessel with Lite Blue Glow)
-    this.ctx.fillStyle = '#38bdf8';
-    this.ctx.beginPath();
-    this.ctx.roundRect(this.player.x, this.player.y, this.player.width, this.player.height, 6);
-    this.ctx.fill();
-
-    // Player Core Eye
-    this.ctx.fillStyle = '#000';
-    this.ctx.fillRect(this.player.x + this.player.width / 2 - 4, this.player.y + 6, 8, 8);
-
-    // Spawning items
-    this.spawnTimer++;
-    if (this.spawnTimer > 35) {
-      this.spawnItem();
-      this.spawnTimer = 0;
+    // Route depending on game
+    if (this.currentGame === 'dodge') {
+      this.updateDodgeGame();
+    } else if (this.currentGame === 'cyclops') {
+      this.updateCyclopsGame();
+    } else if (this.currentGame === 'tapestry') {
+      this.renderTapestry();
     }
 
-    // Update & draw items
-    for (let i = this.items.length - 1; i >= 0; i--) {
-      const it = this.items[i];
-      it.y += it.speed;
-
-      // Draw item
-      this.ctx.fillStyle = it.isGood ? '#38bdf8' : '#ff0055';
-      this.ctx.beginPath();
-      this.ctx.arc(it.x, it.y, it.radius, 0, Math.PI * 2);
-      this.ctx.fill();
-
-      // Shadow / Glow
-      this.ctx.shadowColor = it.isGood ? '#38bdf8' : '#ff0055';
-      this.ctx.shadowBlur = 10;
-
-      // Collision Check with player
-      if (
-        it.y + it.radius >= this.player.y &&
-        it.y - it.radius <= this.player.y + this.player.height &&
-        it.x + it.radius >= this.player.x &&
-        it.x - it.radius <= this.player.x + this.player.width
-      ) {
-        if (it.isGood) {
-          synth.coin();
-          this.score += 10;
-          this.explode(it.x, it.y, '#38bdf8');
-        } else {
-          synth.hit();
-          this.lives--;
-          this.explode(it.x, it.y, '#ff0055');
-          if (this.lives <= 0) {
-            this.updateHud();
-            this.gameOver();
-            return;
-          }
-        }
-        this.updateHud();
-        this.items.splice(i, 1);
-        continue;
-      }
-
-      // Offscreen
-      if (it.y > this.canvas.height + 20) {
-        this.items.splice(i, 1);
-      }
-    }
-
-    this.ctx.shadowBlur = 0;
-
-    // Update Particles
+    // Particle FX
     for (let i = this.particles.length - 1; i >= 0; i--) {
       const p = this.particles[i];
       p.x += p.vx;
@@ -680,6 +848,199 @@ class NeuralDodgeGame {
     }
 
     this.animId = requestAnimationFrame(() => this.loop());
+  }
+
+  // GAME 1: Neural Dodge (Scylla & Ambrosia)
+  updateDodgeGame() {
+    // Player Move
+    if (this.player.movingLeft && this.player.x > 0) this.player.x -= this.player.speed;
+    if (this.player.movingRight && this.player.x < this.canvas.width - this.player.width) this.player.x += this.player.speed;
+
+    // Draw Odysseus Vessel
+    this.drawShip(this.player.x, this.player.y, '#00f0ff');
+
+    this.spawnTimer++;
+    if (this.spawnTimer > 32) {
+      const isGood = Math.random() > 0.36;
+      this.items.push({
+        x: Math.random() * (this.canvas.width - 30) + 15,
+        y: -20,
+        radius: isGood ? 10 : 12,
+        speed: Math.random() * 2 + 2.5 + this.score * 0.015,
+        isGood: isGood
+      });
+      this.spawnTimer = 0;
+    }
+
+    for (let i = this.items.length - 1; i >= 0; i--) {
+      const it = this.items[i];
+      it.y += it.speed;
+
+      this.ctx.fillStyle = it.isGood ? '#00f0ff' : '#ff0055';
+      this.ctx.beginPath();
+      this.ctx.arc(it.x, it.y, it.radius, 0, Math.PI * 2);
+      this.ctx.fill();
+
+      // Collision
+      if (
+        it.y + it.radius >= this.player.y &&
+        it.y - it.radius <= this.player.y + this.player.height &&
+        it.x + it.radius >= this.player.x &&
+        it.x - it.radius <= this.player.x + this.player.width
+      ) {
+        if (it.isGood) {
+          synth.coin();
+          this.score += 10;
+          this.explode(it.x, it.y, '#00f0ff');
+        } else {
+          synth.hit();
+          this.lives--;
+          this.explode(it.x, it.y, '#ff0055');
+          if (this.lives <= 0) {
+            this.updateHud();
+            this.gameOver('Scylla & the Sirens devoured your starship!');
+            return;
+          }
+        }
+        this.updateHud();
+        this.items.splice(i, 1);
+        continue;
+      }
+
+      if (it.y > this.canvas.height + 20) this.items.splice(i, 1);
+    }
+  }
+
+  // GAME 2: Cyclops Defense (Invaders style space shooter)
+  updateCyclopsGame() {
+    if (this.player.movingLeft && this.player.x > 0) this.player.x -= this.player.speed;
+    if (this.player.movingRight && this.player.x < this.canvas.width - this.player.width) this.player.x += this.player.speed;
+
+    this.drawShip(this.player.x, this.player.y, '#38bdf8');
+
+    // Update Lasers
+    for (let l = this.lasers.length - 1; l >= 0; l--) {
+      const laser = this.lasers[l];
+      laser.y -= laser.speed;
+
+      this.ctx.fillStyle = '#00f0ff';
+      this.ctx.shadowColor = '#00f0ff';
+      this.ctx.shadowBlur = 8;
+      this.ctx.fillRect(laser.x, laser.y, laser.width, laser.height);
+      this.ctx.shadowBlur = 0;
+
+      if (laser.y < -10) this.lasers.splice(l, 1);
+    }
+
+    // Spawn Cyclops Drones
+    this.spawnTimer++;
+    if (this.spawnTimer > 40) {
+      this.enemies.push({
+        x: Math.random() * (this.canvas.width - 40) + 20,
+        y: -30,
+        width: 32,
+        height: 32,
+        speed: 1.8 + Math.min(this.score * 0.01, 3),
+        eyePulse: 0
+      });
+      this.spawnTimer = 0;
+    }
+
+    // Update Enemies
+    for (let e = this.enemies.length - 1; e >= 0; e--) {
+      const en = this.enemies[e];
+      en.y += en.speed;
+
+      // Draw Cyclops Drone
+      this.ctx.fillStyle = '#6366f1';
+      this.ctx.fillRect(en.x, en.y, en.width, en.height);
+      // Cyclops Single Eye
+      this.ctx.fillStyle = '#ff0055';
+      this.ctx.beginPath();
+      this.ctx.arc(en.x + en.width / 2, en.y + en.height / 2, 7, 0, Math.PI * 2);
+      this.ctx.fill();
+
+      // Check collision with Lasers
+      for (let l = this.lasers.length - 1; l >= 0; l--) {
+        const laser = this.lasers[l];
+        if (
+          laser.x >= en.x && laser.x <= en.x + en.width &&
+          laser.y >= en.y && laser.y <= en.y + en.height
+        ) {
+          synth.hit();
+          this.score += 20;
+          this.explode(en.x + en.width / 2, en.y + en.height / 2, '#6366f1');
+          this.enemies.splice(e, 1);
+          this.lasers.splice(l, 1);
+          this.updateHud();
+          break;
+        }
+      }
+
+      // Check collision with Player or bottom
+      if (en.y + en.height >= this.player.y && en.x + en.width >= this.player.x && en.x <= this.player.x + this.player.width) {
+        synth.hit();
+        this.lives--;
+        this.explode(en.x + en.width / 2, en.y + en.height / 2, '#ff0055');
+        this.enemies.splice(e, 1);
+        if (this.lives <= 0) {
+          this.updateHud();
+          this.gameOver('Polyphemus\' deep-space cyclopes overwhelmed your shields!');
+          return;
+        }
+        this.updateHud();
+      } else if (en.y > this.canvas.height) {
+        this.enemies.splice(e, 1);
+      }
+    }
+  }
+
+  // GAME 3: Ithaca Matrix Tapestry Canvas Render
+  renderTapestry() {
+    this.ctx.font = '11px "Press Start 2P"';
+    this.ctx.textAlign = 'center';
+    this.ctx.fillStyle = '#94a3b8';
+    this.ctx.fillText(
+      this.tapestry.animating ? 'OBSERVE CELESTIAL PATTERN...' : 'RECONSTRUCT THE TAPESTRY (CLICK NODES)',
+      this.canvas.width / 2, 45
+    );
+
+    this.tapestry.grid.forEach((node) => {
+      this.ctx.fillStyle = node.active ? '#ffffff' : (this.tapestry.animating ? 'rgba(8, 20, 38, 0.9)' : 'rgba(15, 28, 52, 0.85)');
+      this.ctx.strokeStyle = node.active ? '#00f0ff' : node.color;
+      this.ctx.lineWidth = node.active ? 4 : 2;
+
+      this.ctx.beginPath();
+      this.ctx.roundRect(node.x, node.y, node.size, node.size, 10);
+      this.ctx.fill();
+      this.ctx.stroke();
+
+      if (node.active) {
+        this.ctx.shadowColor = node.color;
+        this.ctx.shadowBlur = 18;
+      }
+
+      this.ctx.fillStyle = node.active ? '#000000' : '#ffffff';
+      this.ctx.font = '8px "Press Start 2P"';
+      this.ctx.fillText(node.label, node.x + node.size / 2, node.y + node.size / 2 + 4);
+      this.ctx.shadowBlur = 0;
+    });
+  }
+
+  drawShip(x, y, color) {
+    this.ctx.fillStyle = color;
+    this.ctx.beginPath();
+    // Starship aerodynamic prow
+    this.ctx.moveTo(x + this.player.width / 2, y);
+    this.ctx.lineTo(x + this.player.width, y + this.player.height);
+    this.ctx.lineTo(x + this.player.width / 2, y + this.player.height - 5);
+    this.ctx.lineTo(x, y + this.player.height);
+    this.ctx.closePath();
+    this.ctx.fill();
+
+    // Thruster glow
+    this.ctx.fillStyle = '#00f0ff';
+    this.ctx.fillRect(x + this.player.width / 2 - 3, y + this.player.height - 2, 6, 5);
   }
 }
 
@@ -796,5 +1157,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initContactForm();
   initSoundEffects();
   initUIModals();
-  new NeuralDodgeGame();
+  new OdysseyArcadeManager();
 });
