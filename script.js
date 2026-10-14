@@ -136,8 +136,8 @@ function initBackgroundCanvas() {
   function renderStars() {
     ctx.clearRect(0, 0, width, height);
 
-    // Subtle Amber Grid lines
-    ctx.strokeStyle = 'rgba(255, 183, 3, 0.025)';
+    // Subtle Lite Blue Grid lines
+    ctx.strokeStyle = 'rgba(56, 189, 248, 0.025)';
     ctx.lineWidth = 1;
     const gridSize = 65;
     for (let x = 0; x < width; x += gridSize) {
@@ -163,7 +163,7 @@ function initBackgroundCanvas() {
       if (s.x > width) s.x = 0;
       if (s.x < 0) s.x = width;
 
-      ctx.fillStyle = `rgba(255, 183, 3, ${s.opacity})`;
+      ctx.fillStyle = `rgba(56, 189, 248, ${s.opacity})`;
       ctx.fillRect(s.x, s.y, s.size, s.size);
     }
 
@@ -595,8 +595,8 @@ class NeuralDodgeGame {
       this.player.x += this.player.speed;
     }
 
-    // Draw Player (AI Core Vessel with Amber Glow)
-    this.ctx.fillStyle = '#ffb703';
+    // Draw Player (AI Core Vessel with Lite Blue Glow)
+    this.ctx.fillStyle = '#38bdf8';
     this.ctx.beginPath();
     this.ctx.roundRect(this.player.x, this.player.y, this.player.width, this.player.height, 6);
     this.ctx.fill();
@@ -618,13 +618,13 @@ class NeuralDodgeGame {
       it.y += it.speed;
 
       // Draw item
-      this.ctx.fillStyle = it.isGood ? '#ffb703' : '#ff0055';
+      this.ctx.fillStyle = it.isGood ? '#38bdf8' : '#ff0055';
       this.ctx.beginPath();
       this.ctx.arc(it.x, it.y, it.radius, 0, Math.PI * 2);
       this.ctx.fill();
 
       // Shadow / Glow
-      this.ctx.shadowColor = it.isGood ? '#ffb703' : '#ff0055';
+      this.ctx.shadowColor = it.isGood ? '#38bdf8' : '#ff0055';
       this.ctx.shadowBlur = 10;
 
       // Collision Check with player
@@ -637,7 +637,7 @@ class NeuralDodgeGame {
         if (it.isGood) {
           synth.coin();
           this.score += 10;
-          this.explode(it.x, it.y, '#ffb703');
+          this.explode(it.x, it.y, '#38bdf8');
         } else {
           synth.hit();
           this.lives--;
