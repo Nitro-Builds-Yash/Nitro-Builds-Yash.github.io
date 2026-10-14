@@ -1407,6 +1407,126 @@ function initUIModals() {
   }
 }
 
+// --- 11. Visitor Gamification Engine (XP, Levels & Secret Achievements) ---
+class GamificationEngine {
+  constructor() {
+    this.xp = parseInt(localStorage.getItem('yash_visitor_xp') || '25', 10);
+    this.unlocked = JSON.parse(localStorage.getItem('yash_achievements') || '[]');
+    this.badgeEl = document.getElementById('hudXpBadge');
+    this.levelText = document.getElementById('hudLevelText');
+    this.xpFill = document.getElementById('hudXpFill');
+    this.xpNum = document.getElementById('hudXpNum');
+    this.toast = document.getElementById('achievementToast');
+    this.achTitle = document.getElementById('achTitle');
+    this.achDesc = document.getElementById('achDesc');
+
+    this.konamiSequence = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+    this.konamiIndex = 0;
+
+    this.updateUI();
+    this.bindEvents();
+
+    // First visit welcome XP
+    if (!this.unlocked.includes('first_visit')) {
+      setTimeout(() => {
+        this.unlock('first_visit', 'Cadet of Ithaca', 'Arrived at Athota Yashwanth\'s Flight Deck! (+25 XP)', 25);
+      }, 1500);
+    }
+  }
+
+  getLevel() {
+    return Math.floor(this.xp / 100) + 1;
+  }
+
+  addXP(amount, reason) {
+    this.xp += amount;
+    localStorage.setItem('yash_visitor_xp', this.xp);
+    synth.coin();
+    this.updateUI();
+  }
+
+  updateUI() {
+    const level = this.getLevel();
+    const progressInLevel = this.xp % 100;
+
+    if (this.levelText) this.levelText.textContent = `LVL ${level}`;
+    if (this.xpFill) this.xpFill.style.width = `${progressInLevel}%`;
+    if (this.xpNum) this.xpNum.textContent = `${this.xp} XP`;
+  }
+
+  unlock(id, title, desc, xpGain = 50) {
+    if (this.unlocked.includes(id)) return;
+    this.unlocked.push(id);
+    localStorage.setItem('yash_achievements', JSON.stringify(this.unlocked));
+    this.addXP(xpGain);
+
+    if (this.toast && this.achTitle && this.achDesc) {
+      this.achTitle.textContent = title;
+      this.achDesc.textContent = desc;
+      this.toast.classList.add('show');
+      synth.powerup();
+
+      setTimeout(() => {
+        this.toast.classList.remove('show');
+      }, 4500);
+    }
+  }
+
+  bindEvents() {
+    // Secret Konami Code Easter Egg
+    window.addEventListener('keydown', (e) => {
+      const key = e.key;
+      const expected = this.konamiSequence[this.konamiIndex];
+      if (key.toLowerCase() === expected.toLowerCase()) {
+        this.konamiIndex++;
+        if (this.konamiIndex === this.konamiSequence.length) {
+          this.konamiIndex = 0;
+          this.unlock('konami_god', 'Odysseus Mythic Key', 'Entered the 30-Lives Konami Code! Overclocked flight shields unlocked. (+150 XP)', 150);
+          synth.odysseyHorn();
+          document.body.style.filter = 'hue-rotate(180deg)';
+          setTimeout(() => { document.body.style.filter = 'none'; }, 3000);
+        }
+      } else {
+        this.konamiIndex = 0;
+      }
+    });
+
+    // Award XP when browsing different project missions
+    document.querySelectorAll('.project-select-item').forEach((item) => {
+      item.addEventListener('click', () => {
+        const proj = item.getAttribute('data-project');
+        this.unlock(`proj_${proj}`, `Telemetry Decoded: ${proj.toUpperCase()}`, `Inspected architecture & live benchmarks (+20 XP)`, 20);
+      });
+    });
+
+    // Award XP on clicking skill filters
+    document.querySelectorAll('.filter-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        this.unlock('skills_surveyed', 'Arsenal Master', 'Analyzed complete technical stack and toolset (+25 XP)', 25);
+      });
+    });
+
+    // Award XP on reading experience
+    const expSection = document.getElementById('experience');
+    if (expSection) {
+      const observer = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          this.unlock('exp_read', 'OMICS Campaign Recon', 'Reviewed high-scale production AI engineering history (+30 XP)', 30);
+          observer.disconnect();
+        }
+      }, { threshold: 0.4 });
+      observer.observe(expSection);
+    }
+
+    // Award XP on launching arcade games
+    document.querySelectorAll('.arcade-tab-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        this.unlock('arcade_warrior', 'Odyssey Pilot', 'Booted up the Odysseus Arcade retro battle simulator (+30 XP)', 30);
+      });
+    });
+  }
+}
+
 // --- Initialize All Systems on DOM Ready ---
 document.addEventListener('DOMContentLoaded', () => {
   initCustomCursor();
@@ -1418,4 +1538,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initSoundEffects();
   initUIModals();
   new OdysseyArcadeManager();
+  window.gameEngine = new GamificationEngine();
 });
+

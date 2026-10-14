@@ -236,8 +236,116 @@ body {
   font-weight: 600;
 }
 
+.hud-xp-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(0, 240, 255, 0.08);
+  border: 1px solid rgba(0, 240, 255, 0.3);
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-family: var(--font-pixel);
+  font-size: 0.6rem;
+  color: var(--accent-cyan);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.hud-xp-badge:hover {
+  background: rgba(0, 240, 255, 0.18);
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+}
+
+.hud-xp-bar-bg {
+  width: 44px;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.hud-xp-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #00f0ff, #38bdf8);
+  border-radius: 999px;
+  transition: width 0.4s ease;
+}
+
+.hud-xp-num {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #fff;
+}
+
 .hamburger-btn {
   display: none;
+}
+
+/* ACHIEVEMENT UNLOCKED POPUP TOAST */
+.achievement-toast {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: rgba(6, 12, 24, 0.95);
+  border: 1px solid var(--accent-cyan);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9), 0 0 30px rgba(0, 240, 255, 0.35);
+  border-radius: 14px;
+  padding: 1rem 1.4rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  z-index: 9999;
+  transform: translateY(120px);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+}
+
+.achievement-toast.show {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.ach-icon {
+  width: 44px;
+  height: 44px;
+  background: rgba(0, 240, 255, 0.15);
+  border: 1px solid var(--accent-cyan);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-cyan);
+  font-size: 1.2rem;
+  animation: pulseDot 1.5s infinite;
+}
+
+.ach-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ach-tag {
+  font-family: var(--font-pixel);
+  font-size: 0.58rem;
+  color: var(--accent-cyan);
+  letter-spacing: 0.5px;
+}
+
+.ach-title {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #fff;
+  margin: 0;
+}
+
+.ach-desc {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  margin: 0;
 }
 
 /* Mobile Drawer */

@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   
   <!-- Stylesheet (cache-busted for instant visual update) -->
-  <link rel="stylesheet" href="style.css?v=3.0" />
+  <link rel="stylesheet" href="style.css?v=3.5" />
 </head>
 <body>
   <!-- Custom Game Cursor -->
@@ -47,6 +47,15 @@
     </nav>
 
     <div class="hud-controls">
+      <!-- Player XP & Level HUD Indicator -->
+      <div class="hud-xp-badge" id="hudXpBadge" title="Your Visitor XP! Explore the deck to level up.">
+        <i class="fa-solid fa-bolt"></i> <span id="hudLevelText">LVL 1</span>
+        <div class="hud-xp-bar-bg">
+          <div class="hud-xp-bar-fill" id="hudXpFill" style="width: 25%;"></div>
+        </div>
+        <span class="hud-xp-num" id="hudXpNum">25 XP</span>
+      </div>
+
       <!-- Mini Audio FX Switch -->
       <button class="hud-btn" id="soundToggle" title="Toggle Sound FX (Web Audio 8-bit)">
         <i class="fa-solid fa-volume-high" id="soundIcon"></i>
@@ -958,7 +967,17 @@
     </div>
   </div>
 
+  <!-- ACHIEVEMENT UNLOCKED POPUP TOAST -->
+  <div class="achievement-toast" id="achievementToast">
+    <div class="ach-icon"><i class="fa-solid fa-trophy"></i></div>
+    <div class="ach-info">
+      <span class="ach-tag">ACHIEVEMENT UNLOCKED!</span>
+      <h4 class="ach-title" id="achTitle">Explorer of Ithaca</h4>
+      <p class="ach-desc" id="achDesc">+50 XP gained for exploring all mission decks</p>
+    </div>
+  </div>
+
   <!-- Main JavaScript File -->
-  <script src="script.js?v=3.0"></script>
+  <script src="script.js?v=3.2"></script>
 </body>
 </html>
