@@ -278,24 +278,44 @@ const projectsData = {
   ➔ [Real-Time WebSocket Chunk Boundary Validator]`,
     stack: ['Python', 'FastAPI', 'Gemini Vision API', 'Docker', 'WebSockets', 'Pydantic']
   },
-  pulsus: {
-    badge: 'GUILD INTEL CRAWLER &bull; SCOUT CLASS',
+  omniscout: {
+    badge: 'GUILD INTEL CRAWLER &bull; 55 REPOSITORIES',
     date: 'October 2026',
-    title: 'Pulsus-MedScout',
-    tagline: 'Biomedical Literature & Author Intelligence Platform across 34 Repositories',
-    repoUrl: 'https://github.com/Nitro-Builds-Yash/Pulsus-MedScout',
-    desc: 'Engineered a recon scout crawling across 34 journal realms, harvesting intelligence on 20,000+ academic publications. Extracted verified researcher contact records with 95% precision and automated scheduled exports into formatted Excel reports. Implemented exponential backoff retries and concurrent workers, boosting crawling speed by 3x while dodging rate-limit traps.',
+    title: 'OmniScout // Pulsus Group',
+    tagline: 'Biomedical Literature & Author Intelligence Platform across 55 Repositories',
+    repoUrl: 'https://github.com/Nitro-Builds-Yash/OmniScout',
+    desc: 'Engineered an enterprise biomedical literature and researcher discovery platform for Pulsus Group. Crawls and aggregates metadata across 55 journal repositories (Europe PMC, PubMed, Crossref, PLOS, arXiv, bioRxiv/medRxiv). Enforces a strict Zero-Gmail policy for high-deliverability academic outreach, 3-field completeness guarantee (Paper Title, Author Name, Email ID), and auto-routed multi-LLM entity extraction (Gemini & OpenRouter).',
     metrics: [
-      { val: '34 Realms', lbl: 'Journals Crawled' },
-      { val: '20,000+', lbl: 'Publications Harvested' },
-      { val: '3x Agility', lbl: 'Worker Speed Buff' }
+      { val: '55 Repos', lbl: 'Active Sources Indexed' },
+      { val: '0% Gmail', lbl: 'Institutional Verified' },
+      { val: '5 Concurrent', lbl: 'Parallel Extraction Jobs' }
     ],
-    architecture: `[34 Scientific Journal Repositories]
-  ➔ [Concurrent Async Crawlers + Exponential Backoff]
-  ➔ [BeautifulSoup HTML AST & Metadata Extraction]
-  ➔ [Automated Contact Verification Pipeline (95% Accuracy)]
-  ➔ [Scheduled Excel Automation & Intelligence Reports]`,
-    stack: ['Python', 'BeautifulSoup', 'Data Pipelines', 'Excel Automation', 'Async Workers']
+    architecture: `[User Topic Query & Filters (Country, Year Range)]
+  ➔ [Parallel Multi-Engine Search across 10-55 Sources]
+  ➔ [DOI Normalization & Open PDF Fetch (pdfplumber)]
+  ➔ [AI Router: Gemini / OpenRouter Free-Model Failover]
+  ➔ [Strict 3-Field Contract + DNS MX & SMTP Handshake Check]
+  ➔ [Formatted Excel (.xlsx) Export & Real-Time Flask UI]`,
+    stack: ['Python 3.10+', 'Flask 3.0', 'Gemini API', 'OpenRouter', 'pdfplumber', 'Tailwind', 'Excel Automation']
+  },
+  mimicmail: {
+    badge: 'STEALTH BROWSER ENGINE &bull; PLAYWRIGHT',
+    date: 'October 2026',
+    title: 'MimicMail',
+    tagline: 'Humanized Outreach Automation Platform with Browser Session Persistence',
+    repoUrl: 'https://github.com/Nitro-Builds-Yash/MimicMail',
+    desc: 'Architected a clinical-grade, stealth outreach automation platform for Zoho Mail. Bypasses rigid SMTP bulk-sender penalties by orchestrating authentic browser interactions via Playwright with persistent session cookies, anti-bot behavioral jitter (±15-35s), and 5-slot randomized HTML template rotation to eliminate spam fingerprinting.',
+    metrics: [
+      { val: '0% SMTP Trap', lbl: 'Genuine Browser Dispatch' },
+      { val: '5 Slots', lbl: 'Randomized Template Pool' },
+      { val: 'Dual Window', lbl: 'Multi-Instance Concurrency' }
+    ],
+    architecture: `[Recipients Excel (.xlsx)] ➔ [Tkinter Mission Control GUI]
+  ➔ [Playwright Chromium Engine (Persistent Zoho Session)]
+  ➔ [5-Slot Randomized Template Selector + Variable Ingestion]
+  ➔ [Anti-Bot Behavioral Jitter Delay (1.0-5.0m ±15-35s)]
+  ➔ [Real-Time Deliverability Ratio Breakdown Canvas & Disk Sync]`,
+    stack: ['Python 3.10+', 'Playwright', 'Chromium Automation', 'Tkinter Modern GUI', 'OpenPyXL', 'Asyncio']
   },
   halo: {
     badge: 'ORACLE RAG QA &bull; SAGE CLASS',
