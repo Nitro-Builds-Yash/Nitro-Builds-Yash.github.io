@@ -281,10 +281,10 @@ const projectsData = {
   omniscout: {
     badge: 'GUILD INTEL CRAWLER &bull; 55 REPOSITORIES',
     date: 'October 2026',
-    title: 'OmniScout // Pulsus Group',
+    title: 'OmniScout // OMICS International',
     tagline: 'Biomedical Literature & Author Intelligence Platform across 55 Repositories',
     repoUrl: 'https://github.com/Nitro-Builds-Yash/OmniScout',
-    desc: 'Engineered an enterprise biomedical literature and researcher discovery platform for Pulsus Group. Crawls and aggregates metadata across 55 journal repositories (Europe PMC, PubMed, Crossref, PLOS, arXiv, bioRxiv/medRxiv). Enforces a strict Zero-Gmail policy for high-deliverability academic outreach, 3-field completeness guarantee (Paper Title, Author Name, Email ID), and auto-routed multi-LLM entity extraction (Gemini & OpenRouter).',
+    desc: 'Engineered an enterprise biomedical literature and researcher discovery platform for OMICS International. Crawls and aggregates metadata across 55 journal repositories (Europe PMC, PubMed, Crossref, PLOS, arXiv, bioRxiv/medRxiv). Enforces a strict Zero-Gmail policy for high-deliverability academic outreach, 3-field completeness guarantee (Paper Title, Author Name, Email ID), and auto-routed multi-LLM entity extraction (Gemini & OpenRouter).',
     metrics: [
       { val: '55 Repos', lbl: 'Active Sources Indexed' },
       { val: '0% Gmail', lbl: 'Institutional Verified' },
