@@ -466,12 +466,24 @@ body {
 
 .code-pill {
   font-family: var(--font-mono);
-  background: rgba(0, 240, 255, 0.1);
-  border: 1px solid rgba(0, 240, 255, 0.3);
-  padding: 2px 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 3px 9px;
   border-radius: 6px;
-  color: var(--accent-cyan);
-  font-size: 0.9em;
+  color: #cbd5e1;
+  font-size: 0.85em;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  letter-spacing: 0.3px;
+  transition: var(--transition);
+}
+
+.code-pill:hover {
+  background: rgba(0, 240, 255, 0.08);
+  border-color: rgba(0, 240, 255, 0.3);
+  color: #fff;
 }
 
 /* Terminal Line */
