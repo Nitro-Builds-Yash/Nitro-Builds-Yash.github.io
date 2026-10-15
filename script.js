@@ -260,16 +260,16 @@ function initTypewriter() {
 // --- 5. INTERACTIVE MISSION DECK (Radical Projects Showcase) ---
 const projectsData = {
   omnichunk: {
-    badge: 'FLAGSHIP AI PLATFORM',
+    badge: 'LEGENDARY ARTIFACT &bull; TIER 5 AI ENGINE',
     date: 'October 2026',
     title: 'OmniChunk',
     tagline: 'Universal Multi-Modal Chunking & Relational Structure Extraction Engine',
     repoUrl: 'https://github.com/Nitro-Builds-Yash/OmniChunk',
-    desc: 'Architected a parsing engine processing 100+ page complex PDFs with multi-column tables, achieving 98% structural text retention. Preserved contextual relationships across 25+ tabular sections per document, boosting downstream semantic search precision by 40%. Implemented a real-time web dashboard allowing boundary validation of 1,000+ extracted chunks per job.',
+    desc: 'Forged an extraction engine capable of devouring 100+ page complex PDFs with multi-column tables, achieving 98% structural text retention. Preserved contextual relationships across 25+ tabular dungeons per scroll, boosting downstream semantic search precision by 40%. Implemented a real-time command dashboard allowing boundary validation of 1,000+ extracted chunks per raid.',
     metrics: [
-      { val: '98%', lbl: 'Structural Text Retention' },
-      { val: '100+ Pages', lbl: 'Complex PDF Support' },
-      { val: '+40%', lbl: 'Search Precision Boost' }
+      { val: '98%', lbl: 'Critical Text Retention' },
+      { val: '100+ Pages', lbl: 'Raid Dungeon Depth' },
+      { val: '+40%', lbl: 'Search Accuracy Buff' }
     ],
     architecture: `[Input: Complex Multi-Column PDFs & Tables]
   ➔ [Gemini Vision API + Layout Segmenter]
@@ -279,16 +279,16 @@ const projectsData = {
     stack: ['Python', 'FastAPI', 'Gemini Vision API', 'Docker', 'WebSockets', 'Pydantic']
   },
   pulsus: {
-    badge: 'DATA PLATFORM & CRAWLER',
+    badge: 'GUILD INTEL CRAWLER &bull; SCOUT CLASS',
     date: 'October 2026',
     title: 'Pulsus-MedScout',
     tagline: 'Biomedical Literature & Author Intelligence Platform across 34 Repositories',
     repoUrl: 'https://github.com/Nitro-Builds-Yash/Pulsus-MedScout',
-    desc: 'Engineered a discovery crawler across 34 journal repositories, aggregating metadata for 20,000+ academic publications. Extracted verified researcher contact records with 95% accuracy and automated scheduled exports into formatted Excel reports. Implemented exponential backoff retries and concurrent workers, boosting crawling throughput by 3x while preventing rate-limiting.',
+    desc: 'Engineered a recon scout crawling across 34 journal realms, harvesting intelligence on 20,000+ academic publications. Extracted verified researcher contact records with 95% precision and automated scheduled exports into formatted Excel reports. Implemented exponential backoff retries and concurrent workers, boosting crawling speed by 3x while dodging rate-limit traps.',
     metrics: [
-      { val: '34 Repos', lbl: 'Journals Crawled' },
-      { val: '20,000+', lbl: 'Publications Aggregated' },
-      { val: '3x Speed', lbl: 'Worker Concurrency Boost' }
+      { val: '34 Realms', lbl: 'Journals Crawled' },
+      { val: '20,000+', lbl: 'Publications Harvested' },
+      { val: '3x Agility', lbl: 'Worker Speed Buff' }
     ],
     architecture: `[34 Scientific Journal Repositories]
   ➔ [Concurrent Async Crawlers + Exponential Backoff]
@@ -298,16 +298,16 @@ const projectsData = {
     stack: ['Python', 'BeautifulSoup', 'Data Pipelines', 'Excel Automation', 'Async Workers']
   },
   halo: {
-    badge: 'HYBRID RAG QA SYSTEM',
+    badge: 'ORACLE RAG QA &bull; SAGE CLASS',
     date: 'August 2026',
     title: 'Halo',
     tagline: 'Question-Answering Document Search & Self-Corrective Multi-Doc Reasoning',
     repoUrl: 'https://github.com/Nitro-Builds-Yash/halo',
-    desc: 'Constructed a document QA platform processing 50+ concurrent PDF queries with citation confidence scores above 92%. Combined BM25 keyword matching with dense vector embeddings (FAISS), improving retrieval recall by 28% over pure semantic search. Automated unit tests and Docker image publishing via GitHub Actions, reducing deployment validation cycles from 15 to 3 minutes.',
+    desc: 'Summoned a document QA oracle processing 50+ concurrent queries with citation confidence scores above 92%. Combined BM25 keyword matching with dense vector embeddings (FAISS), improving retrieval recall by 28% over pure semantic search. Automated unit tests and Docker image publishing via GitHub Actions, reducing deployment validation cycles from 15 to 3 minutes.',
     metrics: [
-      { val: '92%+', lbl: 'Citation Confidence Score' },
+      { val: '92%+', lbl: 'Citation Faithfulness' },
       { val: '+28%', lbl: 'Recall vs Pure Semantic' },
-      { val: '15m ➔ 3m', lbl: 'CI/CD Deployment Cycle' }
+      { val: '15m ➔ 3m', lbl: 'Deployment Velocity' }
     ],
     architecture: `[Query + 50+ Concurrent Research PDFs]
   ➔ [Hybrid Indexing: BM25 Sparse + FAISS Dense Vector]
@@ -317,16 +317,16 @@ const projectsData = {
     stack: ['Python', 'FAISS', 'BM25 Hybrid', 'Docker', 'GitHub Actions', 'REST APIs']
   },
   voxcode: {
-    badge: 'AST DEVELOPER TOOLING',
+    badge: 'VOICE AST ASSISTANT &bull; CYBER SPELLBOOK',
     date: 'August 2026',
     title: 'VoxCode',
     tagline: 'Voice-Assisted AI Coding Agent & AST Code Navigator with Live Diffing',
     repoUrl: 'https://github.com/Nitro-Builds-Yash/voxcode',
-    desc: 'Created an AST-based static code analyzer parsing repositories with 50,000+ lines of Python code in under 1.8 seconds. Indexed symbols, method signatures, and class references to generate accurate multi-file diff patches with zero syntax breakages. Authored automated Shell scripts to run isolated test suites across 10+ target repositories simultaneously.',
+    desc: 'Created an AST static code analyzer parsing repositories with 50,000+ lines of Python code in under 1.8 seconds. Indexed symbols, method signatures, and class references to generate accurate multi-file diff patches with zero syntax breakages. Authored automated Shell scripts to run isolated test suites across 10+ target repositories simultaneously.',
     metrics: [
-      { val: '<1.8s', lbl: '50k+ LOC AST Indexing' },
-      { val: '0 Break', lbl: 'Syntax Diff Patch Accuracy' },
-      { val: '10+ Repos', lbl: 'Parallel Test Suite Runner' }
+      { val: '<1.8s', lbl: '50k+ LOC Cast Speed' },
+      { val: '0 Break', lbl: 'Syntax Patch Accuracy' },
+      { val: '10+ Arenas', lbl: 'Parallel Test Suite Runner' }
     ],
     architecture: `[Voice Input / Dev Instruction] ➔ [STT & Intent Parser]
   ➔ [Python AST Syntax Tree Indexer (50k+ LOC in 1.8s)]
@@ -335,16 +335,16 @@ const projectsData = {
     stack: ['Python', 'AST Analysis', 'Shell Scripting', 'Git', 'STT / TTS', 'Linux']
   },
   crypto: {
-    badge: 'BACKEND SERVICES & MONGOOSE',
+    badge: 'VAULT INFRASTRUCTURE &bull; SECURITY CLASS',
     date: 'GitHub Featured',
     title: 'Crypto-Currency-Simulation',
     tagline: 'High-Integrity Backend Model for Educational Cryptocurrency Applications',
     repoUrl: 'https://github.com/Nitro-Builds-Yash/Crypto-Currency-Simulation-main',
-    desc: 'A streamlined and secure backend model for an educational cryptocurrency application. Provides foundational APIs for user management, wallet balance reconciliation, and transaction tracking, demonstrating best practices in Mongoose schema design and data relationships.',
+    desc: 'Fortified backend model for an educational cryptocurrency vault. Provides foundational APIs for user management, wallet balance reconciliation, and transaction tracking, demonstrating best practices in Mongoose schema design and transaction atomicity.',
     metrics: [
-      { val: 'REST API', lbl: 'High-Integrity Endpoints' },
-      { val: '100%', lbl: 'Environment Secrets Isolation' },
-      { val: 'ACID', lbl: 'Mongoose Relational Integrity' }
+      { val: 'REST API', lbl: 'Fortified Endpoints' },
+      { val: '100%', lbl: 'Secret Vault Isolation' },
+      { val: 'ACID', lbl: 'Mongoose Integrity' }
     ],
     architecture: `[Client Request] ➔ [Express.js Router & JWT Auth Middleware]
   ➔ [Mongoose Transaction Model & Balance Validator]
@@ -352,14 +352,14 @@ const projectsData = {
     stack: ['Node.js', 'Express.js', 'MongoDB', 'Mongoose', 'REST APIs', 'JWT']
   },
   agamemnon: {
-    badge: 'SELF-HOSTED AI LAB',
+    badge: 'AIR-GAPPED CITADEL &bull; SHADOW LAB',
     date: 'Active Workspace',
     title: 'Agamemnon',
     tagline: 'Self-Hosted AI Workspace for Private Ingestion & Agent Execution',
     repoUrl: 'https://github.com/Nitro-Builds-Yash/agamemnon',
-    desc: 'Private, self-hosted AI workspace environment tailored for confidential document ingestion, local RAG retrieval, and secure autonomous developer agent execution without external cloud data leaks.',
+    desc: 'Private, self-hosted AI citadel tailored for confidential document ingestion, local RAG retrieval, and secure autonomous developer agent execution without external cloud leaks.',
     metrics: [
-      { val: 'Private', lbl: 'Air-Gapped Data Handling' },
+      { val: 'Air-Gapped', lbl: 'Citadel Isolation' },
       { val: 'Local RAG', lbl: 'Offline Vector Indexing' },
       { val: 'Docker', lbl: 'Self-Contained Deployment' }
     ],
